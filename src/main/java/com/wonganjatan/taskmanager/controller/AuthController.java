@@ -1,10 +1,13 @@
 package com.wonganjatan.taskmanager.controller;
 
+import com.wonganjatan.taskmanager.model.RegistrationDTO;
 import com.wonganjatan.taskmanager.model.User;
 import com.wonganjatan.taskmanager.service.UserService;
+import jakarta.servlet.Registration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -36,5 +39,26 @@ public class AuthController {
             model.addAttribute("error", "Invalid credentils");
             return "login";
         }
+    }
+
+    @GetMapping("/register")
+    public String registration(Model model) {
+        model.addAttribute("registration", new RegistrationDTO());
+
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String registrationHandle(
+            @ModelAttribute("registration")RegistrationDTO form,
+            Model model) {
+
+        User user = new User();
+        user.setUsername(form.getUsername());
+        user.setPassword(form.getPassword());
+
+        userService.save(user);
+
+        return "login";
     }
 }
