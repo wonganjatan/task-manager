@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface UserService {
     Optional<User> login(String username, String password);
+    void save(User user);
 }

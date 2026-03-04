@@ -19,4 +19,9 @@ public class UserServiceImpl implements UserService {
         return repo.findByUsername(username)
                 .filter(user -> user.getPassword().equals(password));
     }
+
+    @Override
+    public void save(User user) {
+        repo.save(user);
+    }
 }
