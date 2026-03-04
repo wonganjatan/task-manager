@@ -1,25 +1,36 @@
 package com.wonganjatan.taskmanager.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+
+@Entity
+@Table(name = "users")
 public class User {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotEmpty(message = "Username cannot be empty")
+    @Column(unique = true, nullable = false)
     private String username;
+
+    @NotEmpty(message = "Password cannot be empty")
     private String password;
 
     public User() {}
 
-    public User(int id, String username, String password) {
-        this.id = id;
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
     // Setter
-    public void setId(int id) { this.id = id; }
     public void setUsername(String username) { this.username = username; }
     public void setPassword(String password) { this.password = password; }
 
     // Getter
-    public int getId() { return id; }
+    public Long getId() { return id; }
     public String getUsername() { return username; }
     public String getPassword() { return password; }
 }
