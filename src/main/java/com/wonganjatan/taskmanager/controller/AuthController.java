@@ -1,9 +1,8 @@
 package com.wonganjatan.taskmanager.controller;
 
-import com.wonganjatan.taskmanager.model.RegistrationDTO;
+import com.wonganjatan.taskmanager.model.UserRegistration;
 import com.wonganjatan.taskmanager.model.User;
 import com.wonganjatan.taskmanager.service.UserService;
-import jakarta.servlet.Registration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,14 +42,14 @@ public class AuthController {
 
     @GetMapping("/register")
     public String registration(Model model) {
-        model.addAttribute("registration", new RegistrationDTO());
+        model.addAttribute("registration", new UserRegistration());
 
         return "register";
     }
 
     @PostMapping("/register")
     public String registrationHandle(
-            @ModelAttribute("registration")RegistrationDTO form,
+            @ModelAttribute("registration") UserRegistration form,
             Model model) {
 
         User user = new User();

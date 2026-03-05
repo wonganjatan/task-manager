@@ -3,7 +3,7 @@ package com.wonganjatan.taskmanager.model;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public class RegistrationDTO {
+public class UserRegistration {
 
     @NotBlank
     private String firstName;
@@ -21,9 +21,9 @@ public class RegistrationDTO {
     @Size(min = 6)
     private String password;
 
-    public RegistrationDTO() {}
+    public UserRegistration() {}
 
-    public RegistrationDTO(
+    public UserRegistration(
             String firstName,
             String lastName,
             String email,
