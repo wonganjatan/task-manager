@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.cglib.core.Local;
@@ -27,11 +28,11 @@ public class Task {
     private String description;
 
     private String priority;
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @NotNull(message = "Due date is required")
     private LocalDateTime dueDate;
-    private boolean isComplete;
+    private boolean isComplete = false;
 
     public Task() {}
 
