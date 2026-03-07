@@ -33,7 +33,7 @@ public class AuthController {
         Optional<User> user = userService.login(username, password);
         if (user.isPresent()) {
             model.addAttribute("user", user.get());
-            return "dashboard";
+            return "redirect:/dashboard";
         } else {
             model.addAttribute("error", "Invalid credentils");
             return "login";
