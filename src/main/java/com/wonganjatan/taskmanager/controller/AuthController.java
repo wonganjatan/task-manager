@@ -1,10 +1,13 @@
 package com.wonganjatan.taskmanager.controller;
 
-import com.wonganjatan.taskmanager.model.UserRegistration;
+import com.wonganjatan.taskmanager.model.UserForm;
 import com.wonganjatan.taskmanager.model.User;
 import com.wonganjatan.taskmanager.service.UserService;
+
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,15 +46,20 @@ public class AuthController {
 
     @GetMapping("/registration")
     public String registration(Model model) {
-        model.addAttribute("registration", new UserRegistration());
+        model.addAttribute("registration", new UserForm());
 
         return "registration";
     }
 
     @PostMapping("/registration")
     public String registrationHandle(
-            @ModelAttribute("registration") UserRegistration form,
+            @Valid @ModelAttribute("registration") UserForm form,
+            BindingResult result,
             Model model) {
+
+        if (result.hasErrors()) {
+            return "registration";
+        }
 
         User user = new User();
         user.setFirstName(form.getFirstName());
