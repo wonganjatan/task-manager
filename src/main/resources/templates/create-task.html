@@ -3,27 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <title>Create Task</title>
 </head>
 <body>
-    <form th:action="@{/dashboard}" th:object="${taskCreationForm}" method="post">
-        <div class="form-group">
-            <label for="title">Title:</label>
-            <input type="text" id="title" th:field="*{title}" required/>
+    <div class="create-task-page">
+        <div class="create-task-container">
+            <h2>Create Task</h2>
+            <form th:action="@{/dashboard}" th:object="${taskCreationForm}" method="post">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" th:field="*{title}" required/>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="text" id="description" th:field="*{description}" required/>
+            </div>
+            <div class="form-group">
+                <label for="priority">Priority:</label>
+                <input type="text" id="priority" th:field="*{priority}" required/>
+            </div>
+            <div class="form-group">
+                <label for="dueDate">Due Date:</label>
+                <input type="datetime-local" id="dueDate" th:field="*{dueDate}" required/>
+            </div>
+            <button type="submit">Create Task</button>
+        </form>
         </div>
-        <div class="form-group">
-            <label for="description">Description:</label>
-            <input type="text" id="description" th:field="*{description}" required/>
-        </div>
-        <div class="form-group">
-            <label for="priority">Priority:</label>
-            <input type="text" id="priority" th:field="*{priority}" required/>
-        </div>
-        <div class="form-group">
-            <label for="dueDate">Due Date:</label>
-            <input type="datetime-local" id="dueDate" th:field="*{dueDate}" required/>
-        </div>
-        <button type="submit">Create Task</button>
-    </form>
+    </div>
 </body>
 </html>

@@ -5,13 +5,17 @@ body {
     width: 100vw;
 }
 
-.login-page, .registration-page {
+.login-page, 
+.registration-page,
+.create-task-page {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.login-container, .registration-container {
+.login-container, 
+.registration-container,
+.create-task-container {
     border: 1px solid black;
     border-radius: 10px;
     padding: 100px;
