@@ -24,7 +24,7 @@ public class Task {
     @Column(nullable = false)
     private String priority;
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
@@ -34,21 +34,6 @@ public class Task {
     private boolean isComplete;
 
     public Task() {}
-
-    public Task(
-            String title, 
-            String description, 
-            String priority, 
-            LocalDateTime createdAt,
-            LocalDateTime dueDate, 
-            boolean isComplete) {
-        this.title = title;
-        this.description = description;
-        this.priority = priority;
-        this.createdAt = createdAt;
-        this.dueDate = dueDate;
-        this.isComplete = isComplete;
-    }
 
     // Setter
     public void setTitle(String title) { this.title = title; }
