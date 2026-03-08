@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Task</title>
+    <title>Create Task</title>
 </head>
 <body>
     <form th:action="@{/dashboard}" th:object="${taskCreationForm}" method="post">
@@ -23,7 +23,7 @@
             <label for="dueDate">Due Date:</label>
             <input type="datetime-local" id="dueDate" th:field="*{dueDate}" required/>
         </div>
-        <button type="submit">Register</button>
+        <button type="submit">Create Task</button>
     </form>
 </body>
 </html>

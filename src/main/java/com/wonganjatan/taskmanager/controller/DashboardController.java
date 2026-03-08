@@ -33,17 +33,17 @@ public class DashboardController {
         return "dashboard";
     }
 
-    @GetMapping("/new")
+    @GetMapping("/create-task")
     public String taskCreationForm(Model model) {
         if (!model.containsAttribute("taskCreationForm")) {
             model.addAttribute("taskCreationForm", new TaskCreation());
         }
 
-        return "new";
+        return "create-task";
     }
 
     @PostMapping
-    public String taskCreation(@ModelAttribute("taskCreationForm") TaskCreation form, Model model) {
+    public String taskCreation(@ModelAttribute("taskCreationForm") TaskCreation form) {
         form.setCreatedAt(LocalDateTime.now());
         form.setIsComplete(false);
 
