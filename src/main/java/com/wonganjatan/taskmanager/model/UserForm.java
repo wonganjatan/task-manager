@@ -1,40 +1,34 @@
 package com.wonganjatan.taskmanager.model;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public class UserRegistration {
+public class UserForm {
 
-    @NotBlank
+    @NotBlank(message = "First Name is required")
     private String firstName;
 
-    @NotBlank
+    @NotBlank(message = "Last Name is required")
     private String lastName;
 
-    @NotBlank
+    @NotBlank(message = "Email is required")
+    @Email(message = "Email must be valid")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "Username cannot be empty")
     private String username;
 
-    @NotBlank
-    @Size(min = 6)
+    @NotBlank(message = "Password cannot be empty")
+    @Size(min = 8, message = "Password must be at least 8 characters")
+    @Pattern(
+        regexp = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]).+$",
+        message = "Password must contain uppercase, number, and special character"
+    )
     private String password;
 
-    public UserRegistration() {}
-
-    public UserRegistration(
-            String firstName,
-            String lastName,
-            String email,
-            String username,
-            String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.username = username;
-        this.password = password;
-    }
+    public UserForm() {}
 
     // Setter
     public void setFirstName(String firstName) { this.firstName = firstName; }
