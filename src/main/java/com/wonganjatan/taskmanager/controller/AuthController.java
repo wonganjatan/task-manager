@@ -36,7 +36,7 @@ public class AuthController {
             model.addAttribute("user", user.get());
             return "redirect:/dashboard";
         } else {
-            model.addAttribute("error", "Invalid credentials");
+            model.addAttribute("authError", "Invalid credentials");
             return "login";
         }
     }
@@ -60,8 +60,12 @@ public class AuthController {
         user.setUsername(form.getUsername());
         user.setPassword(form.getPassword());
 
-        userService.save(user);
-
-        return "redirect:/login";
+        try {
+            userService.save(user);
+            return "redirect:/login";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("authError", e.getMessage());
+            return "registration";
+        }
     }
 }

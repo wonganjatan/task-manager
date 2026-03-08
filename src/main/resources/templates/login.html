@@ -24,8 +24,8 @@
             </form>
             <p>Do not have an account? <a th:href="@{/registration}">Register</a></p>
 
-            <div th:if="${error}" class="error-message">
-                <p th:text="${error}">Error Message</p>
+            <div th:if="${authError}" class="error-message">
+                <p th:text="${authError}">Error Message</p>
             </div>
         </div>
     </div>
