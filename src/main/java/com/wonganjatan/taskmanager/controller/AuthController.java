@@ -45,15 +45,15 @@ public class AuthController {
     }
 
     @GetMapping("/registration")
-    public String registration(Model model) {
-        model.addAttribute("registration", new UserForm());
+    public String userForm(Model model) {
+        model.addAttribute("userForm", new UserForm());
 
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String registrationHandle(
-            @Valid @ModelAttribute("registration") UserForm form,
+    public String userFormHandler(
+            @Valid @ModelAttribute("userForm") UserForm form,
             BindingResult result,
             Model model) {
 
