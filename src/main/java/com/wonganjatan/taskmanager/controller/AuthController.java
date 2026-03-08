@@ -1,7 +1,7 @@
 package com.wonganjatan.taskmanager.controller;
 
-import com.wonganjatan.taskmanager.model.UserForm;
 import com.wonganjatan.taskmanager.model.User;
+import com.wonganjatan.taskmanager.model.UserRegistrationForm;
 import com.wonganjatan.taskmanager.service.UserService;
 
 import jakarta.validation.Valid;
@@ -45,15 +45,15 @@ public class AuthController {
     }
 
     @GetMapping("/registration")
-    public String userForm(Model model) {
-        model.addAttribute("userForm", new UserForm());
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("registrationForm", new UserRegistrationForm());
 
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String userFormHandler(
-            @Valid @ModelAttribute("userForm") UserForm form,
+    public String registerUser(
+            @Valid @ModelAttribute("registrationForm") UserRegistrationForm form,
             BindingResult result,
             Model model) {
 

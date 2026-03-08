@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public class UserForm {
+public class UserRegistrationForm {
 
     @NotBlank(message = "First Name is required")
     private String firstName;
@@ -28,7 +28,7 @@ public class UserForm {
     )
     private String password;
 
-    public UserForm() {}
+    public UserRegistrationForm() {}
 
     // Setter
     public void setFirstName(String firstName) { this.firstName = firstName; }
