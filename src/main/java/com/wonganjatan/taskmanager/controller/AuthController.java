@@ -40,14 +40,14 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/register")
+    @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("registration", new UserRegistration());
 
-        return "register";
+        return "registration";
     }
 
-    @PostMapping("/register")
+    @PostMapping("/registration")
     public String registrationHandle(
             @ModelAttribute("registration") UserRegistration form,
             Model model) {
@@ -61,6 +61,6 @@ public class AuthController {
 
         userService.save(user);
 
-        return "login";
+        return "redirect:/login";
     }
 }
