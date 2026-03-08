@@ -34,6 +34,14 @@ public class DashboardController {
         return "dashboard";
     }
 
+    @GetMapping("/completed-tasks")
+    public String showAllCompletedTasks(Model model) {
+        Collection<Task> allCompletedTasks = taskService.getAllCompletedTasks();
+        model.addAttribute("allCompletedTasks", allCompletedTasks);
+
+        return "completed-tasks";
+    }
+
     @GetMapping("/create-task")
     public String showTaskCreationForm(Model model) {
         if (!model.containsAttribute("taskCreationForm")) {
