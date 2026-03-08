@@ -12,36 +12,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+    @Column(nullable = false)
     private String firstName;
 
-    @NotEmpty
+    @Column(nullable = false)
     private String lastName;
 
-    @NotEmpty
+    @Column(nullable = false)
     private String email;
 
-    @NotEmpty(message = "Username cannot be empty")
     @Column(unique = true, nullable = false)
     private String username;
 
-    @NotEmpty(message = "Password cannot be empty")
+    @Column(nullable = false)
     private String password;
 
     public User() {}
-
-    public User(
-            String firstName,
-            String lastName,
-            String email,
-            String username,
-            String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.username = username;
-        this.password = password;
-    }
 
     // Setter
     public void setFirstName(String firstName) { this.firstName = firstName; }
