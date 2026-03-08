@@ -26,18 +26,6 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Username is already exist");
         }
 
-        if (!isValidPassword(user.getPassword())) {
-            throw new IllegalArgumentException("Password must include both letters and numbers and contain " +
-                    "at least one uppercase letter and one special character e.g., !, @, #, $, etc.)");
-        }
-
         repo.save(user);
-    }
-
-    // Helper to match password pattern
-    private boolean isValidPassword(String plainPassword) {
-        String pattern = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]).+$";
-
-        return plainPassword.matches(pattern);
     }
 }
