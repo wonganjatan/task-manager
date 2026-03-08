@@ -15,19 +15,22 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Title cannot be empty")
-    @Size(min = 3, max = 20, message = "Title must be 3-20 characters")
+    @Column(nullable = false)
     private String title;
 
-    @NotBlank
-    @Size(max = 500, message = "Desciption cannot exceeed 500 characters")
+    @Column(nullable = false)
     private String description;
 
+    @Column(nullable = false)
     private String priority;
+
+    @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    @NotNull(message = "Due date is required")
+    @Column(nullable = false)
     private LocalDateTime dueDate;
+
+    @Column(nullable = false)
     private boolean isComplete;
 
     public Task() {}
