@@ -24,11 +24,12 @@ public class DashboardController {
     public DashboardController(TaskService taskService) {
         this.taskService = taskService;
     }
+
     
     @GetMapping
     public String dashboard(Model model) {
-        Collection<Task> tasks = taskService.getAllTasks();
-        model.addAttribute("tasks", tasks);
+        Collection<Task> allIncompleteTasks = taskService.getAllIncompleteTasks();
+        model.addAttribute("allIncompleteTasks", allIncompleteTasks);
 
         return "dashboard";
     }
@@ -55,11 +56,8 @@ public class DashboardController {
         newTask.setDueDate(form.getDueDate());
         newTask.setIsComplete(form.getIsComplete());
 
-        if (taskService.createTask(newTask) != null) {
-            System.out.println("created");
-        }
+        taskService.createTask(newTask);
 
         return "redirect:/dashboard";
     }
-
 }

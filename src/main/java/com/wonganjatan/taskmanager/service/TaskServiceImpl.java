@@ -19,7 +19,9 @@ public class TaskServiceImpl implements TaskService {
         return repo.save(task);
     }
 
-    public Collection<Task> getAllTasks() {
-        return repo.findAll();
+    public Collection<Task> getAllIncompleteTasks() {
+        return repo.findAll().stream()
+                .filter(task -> !task.getIsComplete())
+                .toList();
     }
 }

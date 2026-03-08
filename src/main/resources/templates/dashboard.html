@@ -17,8 +17,14 @@
             <a href="#">Completed</a>
             <a th:href="@{/dashboard/create-task}">Create Task</a>
         </div>
-        <div class="project-board">
-            
+        <div class="project-board" th:each="task : ${allIncompleteTasks}">
+            <div class="task-card">
+                <h3 th:text="${task.title}">Task title</h3>
+                <p th:text="${task.description}">Task description</p>
+                <p>Priority: <span th:text="${task.priority}">Task priority</span></p>
+                <p>Due: <span th:text="${#temporals.format(task.dueDate, 'yyyy-MM-dd HH:mm')}">Task due date (yyyy-MM-dd HH:mm)</span></p>
+                <p>Status: <span th:text="${task.isComplete} ? 'Complete' : 'Incomplete'">Task status</span></p>
+            </div>
         </div>
     </div>
 </body>

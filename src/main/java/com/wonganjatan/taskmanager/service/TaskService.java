@@ -7,5 +7,5 @@ import java.util.Collection;
 public interface TaskService {
     Task createTask(Task task);
 
-    Collection<Task> getAllTasks();
+    Collection<Task> getAllIncompleteTasks();
 }
