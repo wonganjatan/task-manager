@@ -2,14 +2,10 @@ package com.wonganjatan.taskmanager.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import org.springframework.cglib.core.Local;
 
 @Entity
 @Table(name = "tasks")
@@ -28,11 +24,11 @@ public class Task {
     private String description;
 
     private String priority;
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
     @NotNull(message = "Due date is required")
     private LocalDateTime dueDate;
-    private boolean isComplete = false;
+    private boolean isComplete;
 
     public Task() {}
 

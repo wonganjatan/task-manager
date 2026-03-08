@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Controller
@@ -43,6 +44,9 @@ public class DashboardController {
 
     @PostMapping
     public String taskCreation(@ModelAttribute("taskCreationForm") TaskCreation form, Model model) {
+        form.setCreatedAt(LocalDateTime.now());
+        form.setIsComplete(false);
+
         Task newTask = new Task();
         newTask.setTitle(form.getTitle());
         newTask.setDescription(form.getDescription());
