@@ -6,39 +6,28 @@ import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 
-public class TaskCreation {
+public class TaskForm {
 
     @NotBlank(message = "Title cannot be empty")
-    @Size(min = 3, max = 20, message = "Title must be 3-20 characters")
+    @Size(min = 1, max = 20, message = "Title must be 1-20 characters")
     private String title;
 
-    @NotBlank
-    @Size(max = 500, message = "Desciption cannot exceeed 500 characters")
+    @NotBlank(message = "Description cannot be empty")
+    @Size(min = 1, max = 500, message = "Desciption must be 1-500 characters")
     private String description;
 
+    @NotBlank(message = "Priority is required")
     private String priority;
+
+    @NotNull(message = "Created is required")
     private LocalDateTime createdAt;
 
     @NotNull(message = "Due date is required")
     private LocalDateTime dueDate;
+
     private boolean isComplete;
 
-    public TaskCreation() {}
-
-    public TaskCreation(
-            String title,
-            String description,
-            String priority,
-            LocalDateTime createdAt,
-            LocalDateTime dueDate,
-            boolean isComplete) {
-        this.title = title;
-        this.description = description;
-        this.priority = priority;
-        this.createdAt = createdAt;
-        this.dueDate = dueDate;
-        this.isComplete = isComplete;
-    }
+    public TaskForm() {}
 
     // Setter
     public void setTitle(String title) { this.title = title; }

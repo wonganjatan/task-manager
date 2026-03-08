@@ -1,7 +1,7 @@
 package com.wonganjatan.taskmanager.controller;
 
 import com.wonganjatan.taskmanager.model.Task;
-import com.wonganjatan.taskmanager.model.TaskCreation;
+import com.wonganjatan.taskmanager.model.TaskForm;
 import com.wonganjatan.taskmanager.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,16 +34,16 @@ public class DashboardController {
     }
 
     @GetMapping("/create-task")
-    public String taskCreationForm(Model model) {
+    public String showTaskCreationForm(Model model) {
         if (!model.containsAttribute("taskCreationForm")) {
-            model.addAttribute("taskCreationForm", new TaskCreation());
+            model.addAttribute("taskCreationForm", new TaskForm());
         }
 
         return "create-task";
     }
 
     @PostMapping
-    public String taskCreation(@ModelAttribute("taskCreationForm") TaskCreation form) {
+    public String createTask(@ModelAttribute("taskCreationForm") TaskForm form) {
         form.setCreatedAt(LocalDateTime.now());
         form.setIsComplete(false);
 
