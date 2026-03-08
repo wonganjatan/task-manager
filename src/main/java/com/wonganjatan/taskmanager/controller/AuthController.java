@@ -31,11 +31,12 @@ public class AuthController {
             @RequestParam String password,
             Model model) {
         Optional<User> user = userService.login(username, password);
+
         if (user.isPresent()) {
             model.addAttribute("user", user.get());
             return "redirect:/dashboard";
         } else {
-            model.addAttribute("error", "Invalid credentils");
+            model.addAttribute("error", "Invalid credentials");
             return "login";
         }
     }
