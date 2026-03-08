@@ -46,14 +46,14 @@ public class AuthController {
 
     @GetMapping("/registration")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("registrationForm", new UserForm());
+        model.addAttribute("userRegistrationForm", new UserForm());
 
         return "registration";
     }
 
     @PostMapping("/registration")
     public String registerUser(
-            @Valid @ModelAttribute("registrationForm") UserForm form,
+            @Valid @ModelAttribute("userRegistrationForm") UserForm form,
             BindingResult result,
             Model model) {
 
