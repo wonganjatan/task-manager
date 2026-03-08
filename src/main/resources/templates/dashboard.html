@@ -7,23 +7,24 @@
     <title>Dashboard</title>
 </head>
 <body>
-    <div class="dashboard-header">
+    <div class="header">
         <h1>Task Manager</h1>
         <p>Welcome, <span>User</span></p>
     </div>
-    <div class="dashboard-content">
-        <div class="dashboard-sidebar">
+    <div class="content">
+        <div class="sidebar">
             <a th:href="@{/dashboard}">Dashboard</a>
-            <a href="#">Completed</a>
+            <a th:href="@{/dashboard/completed-tasks}">Completed Tasks</a>
             <a th:href="@{/dashboard/create-task}">Create Task</a>
         </div>
         <div class="project-board" th:each="task : ${allIncompleteTasks}">
+            <h2>Incomplete Tasks</h2>
             <div class="task-card">
                 <h3 th:text="${task.title}">Task title</h3>
                 <p th:text="${task.description}">Task description</p>
                 <p>Priority: <span th:text="${task.priority}">Task priority</span></p>
                 <p>Due: <span th:text="${#temporals.format(task.dueDate, 'yyyy-MM-dd HH:mm')}">Task due date (yyyy-MM-dd HH:mm)</span></p>
-                <p>Status: <span th:text="${task.isComplete} ? 'Complete' : 'Incomplete'">Task status</span></p>
+                <p>Status: <span th:text="${task.isComplete} ? 'Completed' : 'Incomplete'">Task status</span></p>
             </div>
         </div>
     </div>
