@@ -15,17 +15,25 @@ public class TaskServiceImpl implements TaskService {
         this.repo = repo;
     }
 
+    @Override
     public Collection<Task> getAllIncompleteTasks() {
         return repo.findAll().stream()
                 .filter(task -> !task.getIsComplete())
                 .toList();
     }
 
+    @Override
+    public long getIncompleteTasksCount() {
+        return repo.countByIsCompleteFalse();
+    }
+
+    @Override
     public Collection<Task> getAllCompletedTasks() {
         return repo.findAll().stream()
                 .filter(Task::getIsComplete)
                 .toList();
     }
 
+    @Override
     public void createTask(Task task) { repo.save(task); }
 }
