@@ -29,7 +29,10 @@ public class DashboardController {
     @GetMapping
     public String dashboard(Model model) {
         Collection<Task> allIncompleteTasks = taskService.getAllIncompleteTasks();
+        long incompleteTasksCount = taskService.getIncompleteTasksCount();
+
         model.addAttribute("allIncompleteTasks", allIncompleteTasks);
+        model.addAttribute("incompleteTasksCount", incompleteTasksCount);
 
         return "dashboard";
     }
