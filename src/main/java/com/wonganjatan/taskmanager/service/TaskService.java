@@ -9,5 +9,7 @@ public interface TaskService {
     long getIncompleteTasksCount();
 
     Collection<Task> getAllCompletedTasks();
+    long getCompletedTasksCount();
+
     void createTask(Task task);
 }

@@ -35,5 +35,10 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public long getCompletedTasksCount() {
+        return repo.countByIsCompleteTrue();
+    }
+
+    @Override
     public void createTask(Task task) { repo.save(task); }
 }
