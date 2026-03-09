@@ -40,7 +40,10 @@ public class DashboardController {
     @GetMapping("/completed-tasks")
     public String showAllCompletedTasks(Model model) {
         Collection<Task> allCompletedTasks = taskService.getAllCompletedTasks();
+        long completedTasksCount = taskService.getCompletedTasksCount();
+
         model.addAttribute("allCompletedTasks", allCompletedTasks);
+        model.addAttribute("completedTasksCount", completedTasksCount);
 
         return "completed-tasks";
     }
