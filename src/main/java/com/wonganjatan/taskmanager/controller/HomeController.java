@@ -6,9 +6,11 @@ import com.wonganjatan.taskmanager.model.TaskForm;
 import com.wonganjatan.taskmanager.model.User;
 import com.wonganjatan.taskmanager.service.TaskService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -67,8 +69,13 @@ public class HomeController {
     }
 
     @PostMapping
-    public String createTask(@ModelAttribute("taskCreationForm") TaskForm form,
+    public String createTask(@Valid @ModelAttribute("taskCreationForm") TaskForm form,
+                             BindingResult result,
                              Model model) {
+
+        if (result.hasErrors()){
+            return "create-task";
+        }
 
         Task newTask = new Task();
         newTask.setTitle(form.getTitle());
