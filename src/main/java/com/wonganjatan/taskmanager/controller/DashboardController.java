@@ -3,7 +3,9 @@ package com.wonganjatan.taskmanager.controller;
 import com.wonganjatan.taskmanager.model.Status;
 import com.wonganjatan.taskmanager.model.Task;
 import com.wonganjatan.taskmanager.model.TaskForm;
+import com.wonganjatan.taskmanager.model.User;
 import com.wonganjatan.taskmanager.service.TaskService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +30,14 @@ public class DashboardController {
     public String dashboard(
             @RequestParam(name = "priority", required = false) String priority,
             @RequestParam(name = "status", required = false) String status,
-            Model model) {
+            Model model,
+            HttpSession session) {
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
         Collection<Task> allTasks = taskService.getAllTasks(priority, status);
         long tasksCount = allTasks.size();
 
@@ -41,7 +50,14 @@ public class DashboardController {
     }
 
     @GetMapping("/create-task")
-    public String showTaskCreationForm(Model model) {
+    public String showTaskCreationForm(Model model,
+                                       HttpSession session) {
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
         if (!model.containsAttribute("taskCreationForm")) {
             model.addAttribute("taskCreationForm", new TaskForm());
         }

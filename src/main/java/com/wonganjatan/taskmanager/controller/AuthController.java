@@ -5,6 +5,7 @@ import com.wonganjatan.taskmanager.model.User;
 import com.wonganjatan.taskmanager.model.UserForm;
 import com.wonganjatan.taskmanager.service.UserService;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,11 +34,13 @@ public class AuthController {
     public String login(
             @RequestParam String username,
             @RequestParam String password,
-            Model model) {
+            Model model,
+            HttpSession session) {
+
         Optional<User> user = userService.login(username, password);
 
         if (user.isPresent()) {
-            model.addAttribute("user", user.get());
+            session.setAttribute("loggedInUser", user.get());
             return "redirect:/dashboard";
         } else {
             model.addAttribute("authError", "Invalid credentials");
@@ -47,6 +50,7 @@ public class AuthController {
 
     @GetMapping("/registration")
     public String showUserRegistrationForm(Model model) {
+
         model.addAttribute("userRegistrationForm", new UserForm());
 
         return "registration";
