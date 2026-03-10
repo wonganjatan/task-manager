@@ -9,7 +9,10 @@
 <body>
     <div class="header">
         <h1>Task Manager</h1>
-        <p>Welcome, <span>User</span></p>
+        <p>Welcome,
+            <span th:text="${user.getFirstName()}">User first name</span>
+            <span th:text="${user.getLastName()}">User last name</span>
+        </p>
     </div>
     <div class="content">
         <div class="sidebar">

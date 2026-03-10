@@ -38,6 +38,8 @@ public class DashboardController {
             return "redirect:/login";
         }
 
+        model.addAttribute("user", loggedInUser);
+
         Collection<Task> allTasks = taskService.getAllTasks(priority, status);
         long tasksCount = allTasks.size();
 
