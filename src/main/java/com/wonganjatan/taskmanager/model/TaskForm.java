@@ -13,10 +13,10 @@ public class TaskForm {
     private String title;
 
     @NotBlank(message = "Description cannot be empty")
-    @Size(min = 1, max = 500, message = "Description must be 1-500 characters")
+    @Size(min = 1, max = 40, message = "Description must be 1-40 characters")
     private String description;
 
-    @NotBlank(message = "Priority is required")
+    @NotNull(message = "Priority is required")
     private Priority priority;
 
     @NotNull(message = "Due date is required")
