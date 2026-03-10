@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 .login-page,
 .registration-page,
 .create-task-page {
@@ -62,4 +66,21 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+}
+
+.task-container {
+    display: grid;
+    grid-template-columns: repeat(4, 250px);
+    justify-content: center;
+    padding: 20px;
+    gap: 10px;
+}
+
+.task-card {
+    width: 250px;
+    height: 250px;
+    border: 1px solid black;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 10px 10px 10px black;
 }
