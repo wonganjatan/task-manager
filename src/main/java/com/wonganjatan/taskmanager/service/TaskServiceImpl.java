@@ -16,27 +16,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Collection<Task> getAllIncompleteTasks() {
+    public Collection<Task> getAllTasks() {
         return taskRepository.findAll().stream()
-                .filter(task -> !task.getIsComplete())
                 .toList();
     }
 
     @Override
-    public long getIncompleteTasksCount() {
-        return taskRepository.countByIsCompleteFalse();
-    }
-
-    @Override
-    public Collection<Task> getAllCompletedTasks() {
-        return taskRepository.findAll().stream()
-                .filter(Task::getIsComplete)
-                .toList();
-    }
-
-    @Override
-    public long getCompletedTasksCount() {
-        return taskRepository.countByIsCompleteTrue();
+    public long getTasksCount() {
+        return taskRepository.count();
     }
 
     @Override

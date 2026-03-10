@@ -5,11 +5,8 @@ import com.wonganjatan.taskmanager.model.Task;
 import java.util.Collection;
 
 public interface TaskService {
-    Collection<Task> getAllIncompleteTasks();
-    long getIncompleteTasksCount();
-
-    Collection<Task> getAllCompletedTasks();
-    long getCompletedTasksCount();
+    Collection<Task> getAllTasks();
+    long getTasksCount();
 
     void createTask(Task task);
 }
