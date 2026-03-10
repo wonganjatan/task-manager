@@ -1,5 +1,6 @@
 package com.wonganjatan.taskmanager.controller;
 
+import com.wonganjatan.taskmanager.model.Status;
 import com.wonganjatan.taskmanager.model.Task;
 import com.wonganjatan.taskmanager.model.TaskForm;
 import com.wonganjatan.taskmanager.service.TaskService;
@@ -28,24 +29,13 @@ public class DashboardController {
     
     @GetMapping
     public String dashboard(Model model) {
-        Collection<Task> allIncompleteTasks = taskService.getAllIncompleteTasks();
-        long incompleteTasksCount = taskService.getIncompleteTasksCount();
+        Collection<Task> allTasks = taskService.getAllTasks();
+        long tasksCount = taskService.getTasksCount();
 
-        model.addAttribute("allIncompleteTasks", allIncompleteTasks);
-        model.addAttribute("incompleteTasksCount", incompleteTasksCount);
+        model.addAttribute("allTasks", allTasks);
+        model.addAttribute("tasksCount", tasksCount);
 
         return "dashboard";
-    }
-
-    @GetMapping("/completed-tasks")
-    public String showAllCompletedTasks(Model model) {
-        Collection<Task> allCompletedTasks = taskService.getAllCompletedTasks();
-        long completedTasksCount = taskService.getCompletedTasksCount();
-
-        model.addAttribute("allCompletedTasks", allCompletedTasks);
-        model.addAttribute("completedTasksCount", completedTasksCount);
-
-        return "completed-tasks";
     }
 
     @GetMapping("/create-task")
@@ -59,16 +49,13 @@ public class DashboardController {
 
     @PostMapping
     public String createTask(@ModelAttribute("taskCreationForm") TaskForm form) {
-        form.setCreatedAt(LocalDateTime.now());
-        form.setIsComplete(false);
 
         Task newTask = new Task();
         newTask.setTitle(form.getTitle());
         newTask.setDescription(form.getDescription());
         newTask.setPriority(form.getPriority());
-        newTask.setCreatedAt(form.getCreatedAt());
         newTask.setDueDate(form.getDueDate());
-        newTask.setIsComplete(form.getIsComplete());
+        newTask.setStatus(Status.TODO);
 
         taskService.createTask(newTask);
 
