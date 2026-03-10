@@ -10,7 +10,7 @@
     <div class="registration-page">
         <div class="registration-container">
             <h2>Registration</h2>
-            <form th:action="@{/registration}" th:object="${userRegistrationForm}" method="post">
+            <form th:action="@{/registration}" th:object="${userRegistrationForm}" method="post" class="registration-form">
                 <div class="form-group">
                     <label for="firstName">First Name:</label>
                     <input type="text" id="firstName" th:field="*{firstName}" placeholder="John" required/>
@@ -35,9 +35,12 @@
                     <label for="password">Password:</label>
                     <input type="password" id="password" th:field="*{password}" minlength="8" required/>
                     <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error message</p>
-                </div> 
+                </div>
+
                 <button type="submit">Register</button>
             </form>
+
+            <a th:href="@{/login}">Back</a>
 
             <div th:if="${authError}" class="error-message">
                 <p th:text="${authError}">Error Message</p>

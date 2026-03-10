@@ -10,29 +10,32 @@
     <div class="create-task-page">
         <div class="create-task-container">
             <h2>Create Task</h2>
-            <form th:action="@{/dashboard}" th:object="${taskCreationForm}" method="post">
-            <div class="form-group">
-                <label for="title">Title:</label>
-                <input type="text" id="title" th:field="*{title}" required/>
-            </div>
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <input type="text" id="description" th:field="*{description}"/>
-            </div>
-            <div class="form-group">
-                <label for="priority">Priority:</label>
-                <select id="priority" th:field="*{priority}" required>
-                    <option value="LOW">LOW</option>
-                    <option value="MEDIUM">MEDIUM</option>
-                    <option value="HIGH">HIGH</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="dueDate">Due Date:</label>
-                <input type="datetime-local" id="dueDate" th:field="*{dueDate}" required/>
-            </div>
-            <button type="submit">Create Task</button>
-        </form>
+            <form th:action="@{/dashboard}" th:object="${taskCreationForm}" method="post" class="create-task-form">
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" th:field="*{title}" required/>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <input type="text" id="description" th:field="*{description}"/>
+                </div>
+                <div class="form-group">
+                    <label for="priority">Priority:</label>
+                    <select id="priority" th:field="*{priority}" required>
+                        <option value="LOW">LOW</option>
+                        <option value="MEDIUM">MEDIUM</option>
+                        <option value="HIGH">HIGH</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="dueDate">Due Date:</label>
+                    <input type="datetime-local" id="dueDate" th:field="*{dueDate}" required/>
+                </div>
+
+                <button type="submit">Create Task</button>
+            </form>
+
+            <a th:href="@{/dashboard}">Back</a>
         </div>
     </div>
 </body>
