@@ -10,15 +10,15 @@
     <div class="home-page">
         <div class="navbar">
             <div class="navbar-header">
-                <h1>Task Manager</h1>
+                <h1 id="project-name">Task Manager</h1>
             </div>
             <div class="navbar-content">
-                <p>Hi,
+                <p id="welcome-user">Hi,
                     <span th:text="${user.username}">Username</span>
                 </p>
                 <a th:href="@{/home}" id="home-link">Home</a>
                 <form th:action="@{/logout}" method="post">
-                    <button type="submit">Logout</button>
+                    <button type="submit" id="logout-button">Logout</button>
                 </form>
             </div>
         </div>
