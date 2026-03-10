@@ -16,7 +16,7 @@ public class TaskForm {
     @Size(min = 1, max = 40, message = "Description must be 1-40 characters")
     private String description;
 
-    @NotNull(message = "Priority is required")
+    @NotNull(message = "Priority is required")  
     private Priority priority;
 
     @NotNull(message = "Due date is required")
