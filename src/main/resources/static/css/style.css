@@ -16,6 +16,14 @@
     box-shadow: 10px 10px 10px black;
 }
 
+.login-form,
+.registration-form,
+.create-task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .form-group {
     display: flex;
     flex-direction: column;
