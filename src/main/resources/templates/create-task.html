@@ -36,6 +36,10 @@
             </form>
 
             <a th:href="@{/dashboard}">Back</a>
+
+            <div th:if="${authError}" class="error-message">
+                <p th:text="${authError}">Error Message</p>
+            </div>
         </div>
     </div>
 </body>

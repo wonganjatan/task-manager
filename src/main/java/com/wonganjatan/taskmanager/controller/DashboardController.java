@@ -50,7 +50,8 @@ public class DashboardController {
     }
 
     @PostMapping
-    public String createTask(@ModelAttribute("taskCreationForm") TaskForm form) {
+    public String createTask(@ModelAttribute("taskCreationForm") TaskForm form,
+                             Model model) {
 
         Task newTask = new Task();
         newTask.setTitle(form.getTitle());
@@ -59,8 +60,12 @@ public class DashboardController {
         newTask.setDueDate(form.getDueDate());
         newTask.setStatus(Status.TODO);
 
-        taskService.createTask(newTask);
-
-        return "redirect:/dashboard";
+        try {
+            taskService.createTask(newTask);
+            return "redirect:/dashboard";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("authError", e.getMessage());
+            return "create-task";
+        }
     }
 }
