@@ -16,8 +16,10 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Collection<Task> getAllTasks() {
+    public Collection<Task> getAllTasks(String priority, String status) {
         return taskRepository.findAll().stream()
+                .filter(task -> priority == null || priority.isEmpty() || task.getPriority().name().equals(priority))
+                .filter(task -> status == null || status.isEmpty() || task.getStatus().name().equals(status))
                 .toList();
     }
 
