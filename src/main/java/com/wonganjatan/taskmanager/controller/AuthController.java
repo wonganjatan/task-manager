@@ -1,5 +1,6 @@
 package com.wonganjatan.taskmanager.controller;
 
+import com.wonganjatan.taskmanager.model.Role;
 import com.wonganjatan.taskmanager.model.User;
 import com.wonganjatan.taskmanager.model.UserForm;
 import com.wonganjatan.taskmanager.service.UserService;
@@ -66,7 +67,8 @@ public class AuthController {
         user.setLastName(form.getLastName());
         user.setEmail(form.getEmail());
         user.setUsername(form.getUsername());
-        user.setPassword(form.getPassword());
+        user.setPassword(userService.encodePassword(form.getPassword()));
+        user.setRole(Role.USER);
 
         try {
             userService.save(user);
