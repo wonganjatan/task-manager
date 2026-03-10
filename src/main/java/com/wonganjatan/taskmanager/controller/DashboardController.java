@@ -30,7 +30,7 @@ public class DashboardController {
     @GetMapping
     public String dashboard(Model model) {
         Collection<Task> allTasks = taskService.getAllTasks();
-        long tasksCount = taskService.getTasksCount();
+        long tasksCount = allTasks.size();
 
         model.addAttribute("allTasks", allTasks);
         model.addAttribute("tasksCount", tasksCount);

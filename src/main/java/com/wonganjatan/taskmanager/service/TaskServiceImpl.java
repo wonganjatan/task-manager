@@ -22,10 +22,5 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public long getTasksCount() {
-        return taskRepository.count();
-    }
-
-    @Override
     public void createTask(Task task) { taskRepository.save(task); }
 }

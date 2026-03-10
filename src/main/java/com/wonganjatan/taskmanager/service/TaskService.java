@@ -6,7 +6,6 @@ import java.util.Collection;
 
 public interface TaskService {
     Collection<Task> getAllTasks();
-    long getTasksCount();
 
     void createTask(Task task);
 }
