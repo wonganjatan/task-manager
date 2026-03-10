@@ -17,7 +17,7 @@ public class TaskForm {
     private String description;
 
     @NotBlank(message = "Priority is required")
-    private String priority;
+    private Priority priority;
 
     @NotNull(message = "Created is required")
     private LocalDateTime createdAt;
@@ -32,7 +32,7 @@ public class TaskForm {
     // Setter
     public void setTitle(String title) { this.title = title; }
     public void setDescription(String description) { this.description = description; }
-    public void setPriority(String priority) { this.priority = priority; }
+    public void setPriority(Priority priority) { this.priority = priority; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
     public void setDueDate(LocalDateTime dueDate) { this.dueDate = dueDate; }
     public void setIsComplete(boolean isComplete) { this.isComplete = isComplete; }
@@ -40,7 +40,7 @@ public class TaskForm {
     // Getter
     public String getTitle() { return title; }
     public String getDescription() { return description; }
-    public String getPriority() { return priority; }
+    public Priority getPriority() { return priority; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public LocalDateTime getDueDate() { return dueDate; }
     public boolean getIsComplete() { return isComplete; }
