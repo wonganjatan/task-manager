@@ -2,6 +2,18 @@
     box-sizing: border-box;
 }
 
+#home-link,
+#create-task-link {
+    text-decoration-line: none;
+}
+
+#create-task-link {
+    color: white;
+    background-color: #3498DB;
+    padding: 10px;
+    border-radius: 12px;
+}
+
 .login-page,
 .registration-page,
 .create-task-page {
@@ -42,6 +54,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: #2C3E50;
 }
 
 .navbar-content {

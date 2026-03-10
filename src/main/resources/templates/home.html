@@ -16,7 +16,7 @@
                 <p>Hi,
                     <span th:text="${user.username}">Username</span>
                 </p>
-                <a th:href="@{/home}">Home</a>
+                <a th:href="@{/home}" id="home-link">Home</a>
                 <form th:action="@{/logout}" method="post">
                     <button type="submit">Logout</button>
                 </form>
@@ -47,7 +47,7 @@
 
                     <button type="submit">Filter</button>
                 </form>
-                <a th:href="@{/home/create-task}">Create Task</a>
+                <a th:href="@{/home/create-task}" id="create-task-link">Create Task</a>
             </div>
             <div class="task-container">
                 <div class="task-card" th:each="task : ${allTasks}">
