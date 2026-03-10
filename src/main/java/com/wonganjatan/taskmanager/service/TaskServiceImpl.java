@@ -4,6 +4,7 @@ import com.wonganjatan.taskmanager.model.Task;
 import com.wonganjatan.taskmanager.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Service
@@ -24,5 +25,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void createTask(Task task) { taskRepository.save(task); }
+    public void createTask(Task task) {
+        if (task.getDueDate().isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("Due date cannot be in the past");
+        }
+
+        taskRepository.save(task);
+    }
 }
