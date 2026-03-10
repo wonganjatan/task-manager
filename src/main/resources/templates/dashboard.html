@@ -50,7 +50,7 @@
                     <p th:text="${task.description}">Task description</p>
                     <p>Priority: <span th:text="${task.priority}">Task priority</span></p>
                     <p>Due: <span th:text="${#temporals.format(task.dueDate, 'yyyy-MM-dd HH:mm')}">Task due date (yyyy-MM-dd HH:mm)</span></p>
-                    <p>Status: <span th:text="${task.getStatus()}">Task status</span></p>
+                    <p>Status: <span th:text="${task.status}">Task status</span></p>
                 </div>
             </div>
         </div>
