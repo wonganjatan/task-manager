@@ -18,6 +18,28 @@
         </div>
         <div class="project-board">
             <h2>Tasks (<span th:text="${tasksCount}">Task count</span>)</h2>
+            <div class="filter-container">
+                <form method="get" th:action="@{/dashboard}">
+                    <label for="priority">Priority:
+                        <select id="priority" name="priority">
+                            <option value="">All</option>
+                            <option value="LOW" th:selected="${selectedPriority == 'LOW'}">LOW</option>
+                            <option value="MEDIUM" th:selected="${selectedPriority == 'MEDIUM'}">MEDIUM</option>
+                            <option value="HIGH" th:selected="${selectedPriority == 'HIGH'}">HIGH</option>
+                        </select>
+                    </label>
+                    <label for="status">Status:
+                        <select id="status" name="status">
+                            <option value="">All</option>
+                            <option value="TODO" th:selected="${selectedStatus == 'TODO'}">TODO</option>
+                            <option value="IN_PROGRESS" th:selected="${selectedStatus == 'IN_PROGRESS'}">IN_PROGRESS</option>
+                            <option value="DONE" th:selected="${selectedStatus == 'DONE'}">DONE</option>
+                        </select>
+                    </label>
+
+                    <button type="submit">Filter</button>
+                </form>
+            </div>
             <div class="task-container" th:each="task : ${allTasks}">
                 <div class="task-card">
                     <h3 th:text="${task.title}">Task title</h3>
