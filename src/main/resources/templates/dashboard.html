@@ -7,52 +7,56 @@
     <title>Dashboard</title>
 </head>
 <body>
-    <div class="header">
-        <h1>Task Manager</h1>
-        <p>Welcome,
-            <span th:text="${user.getFirstName()}">User first name</span>
-            <span th:text="${user.getLastName()}">User last name</span>
-        </p>
-    </div>
-    <div class="content">
-        <div class="sidebar">
-            <a th:href="@{/dashboard}">Dashboard</a>
-            <a th:href="@{/logout}">Logout</a>
+    <div class="dashboard-page">
+        <div class="header">
+            <h1>Task Manager</h1>
+            <p>Welcome,
+                <span th:text="${user.getFirstName()}">User first name</span>
+                <span th:text="${user.getLastName()}">User last name</span>
+            </p>
         </div>
-        <div class="project-board">
-            <div class="header">
-                <h2>Tasks (<span th:text="${tasksCount}">Task count</span>)</h2>
-                <a th:href="@{/dashboard/create-task}">Create Task</a>
-            </div>
-            <div class="filter-container">
-                <form method="get" th:action="@{/dashboard}">
-                    <label for="priority">Priority:
-                        <select id="priority" name="priority">
-                            <option value="">All</option>
-                            <option value="LOW" th:selected="${selectedPriority == 'LOW'}">LOW</option>
-                            <option value="MEDIUM" th:selected="${selectedPriority == 'MEDIUM'}">MEDIUM</option>
-                            <option value="HIGH" th:selected="${selectedPriority == 'HIGH'}">HIGH</option>
-                        </select>
-                    </label>
-                    <label for="status">Status:
-                        <select id="status" name="status">
-                            <option value="">All</option>
-                            <option value="TODO" th:selected="${selectedStatus == 'TODO'}">TODO</option>
-                            <option value="IN_PROGRESS" th:selected="${selectedStatus == 'IN_PROGRESS'}">IN_PROGRESS</option>
-                            <option value="DONE" th:selected="${selectedStatus == 'DONE'}">DONE</option>
-                        </select>
-                    </label>
-
-                    <button type="submit">Filter</button>
+        <div class="content">
+            <div class="sidebar">
+                <a th:href="@{/dashboard}">Dashboard</a>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit">Logout</button>
                 </form>
             </div>
-            <div class="task-container" th:each="task : ${allTasks}">
-                <div class="task-card">
-                    <h3 th:text="${task.title}">Task title</h3>
-                    <p th:text="${task.description}">Task description</p>
-                    <p>Priority: <span th:text="${task.priority}">Task priority</span></p>
-                    <p>Due: <span th:text="${#temporals.format(task.dueDate, 'yyyy-MM-dd HH:mm')}">Task due date (yyyy-MM-dd HH:mm)</span></p>
-                    <p>Status: <span th:text="${task.status}">Task status</span></p>
+            <div class="project-board">
+                <div class="header">
+                    <h2>Tasks (<span th:text="${tasksCount}">Task count</span>)</h2>
+                    <a th:href="@{/dashboard/create-task}">Create Task</a>
+                </div>
+                <div class="filter-container">
+                    <form method="get" th:action="@{/dashboard}">
+                        <label for="priority">Priority:
+                            <select id="priority" name="priority">
+                                <option value="">All</option>
+                                <option value="LOW" th:selected="${selectedPriority == 'LOW'}">LOW</option>
+                                <option value="MEDIUM" th:selected="${selectedPriority == 'MEDIUM'}">MEDIUM</option>
+                                <option value="HIGH" th:selected="${selectedPriority == 'HIGH'}">HIGH</option>
+                            </select>
+                        </label>
+                        <label for="status">Status:
+                            <select id="status" name="status">
+                                <option value="">All</option>
+                                <option value="TODO" th:selected="${selectedStatus == 'TODO'}">TODO</option>
+                                <option value="IN_PROGRESS" th:selected="${selectedStatus == 'IN_PROGRESS'}">IN_PROGRESS</option>
+                                <option value="DONE" th:selected="${selectedStatus == 'DONE'}">DONE</option>
+                            </select>
+                        </label>
+
+                        <button type="submit">Filter</button>
+                    </form>
+                </div>
+                <div class="task-container" th:each="task : ${allTasks}">
+                    <div class="task-card">
+                        <h3 th:text="${task.title}">Task title</h3>
+                        <p th:text="${task.description}">Task description</p>
+                        <p>Priority: <span th:text="${task.priority}">Task priority</span></p>
+                        <p>Due: <span th:text="${#temporals.format(task.dueDate, 'yyyy-MM-dd HH:mm')}">Task due date (yyyy-MM-dd HH:mm)</span></p>
+                        <p>Status: <span th:text="${task.status}">Task status</span></p>
+                    </div>
                 </div>
             </div>
         </div>
