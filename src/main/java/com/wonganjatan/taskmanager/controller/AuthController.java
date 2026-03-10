@@ -41,7 +41,7 @@ public class AuthController {
 
         if (user.isPresent()) {
             session.setAttribute("loggedInUser", user.get());
-            return "redirect:/dashboard";
+            return "redirect:/home";
         } else {
             model.addAttribute("authError", "Invalid credentials");
             return "login";

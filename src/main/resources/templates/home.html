@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <title>Dashboard</title>
+    <title>Home</title>
 </head>
 <body>
-    <div class="dashboard-page">
+    <div class="home-page">
         <div class="navbar">
             <div class="navbar-header">
                 <h1>Task Manager</h1>
@@ -16,7 +16,7 @@
                 <p>Hi,
                     <span th:text="${user.username}">Username</span>
                 </p>
-                <a th:href="@{/dashboard}">Dashboard</a>
+                <a th:href="@{/home}">Home</a>
                 <form th:action="@{/logout}" method="post">
                     <button type="submit">Logout</button>
                 </form>
@@ -25,13 +25,13 @@
         <div class="content">
             <div class="content-header">
                 <h2>Tasks (<span th:text="${tasksCount}">Task count</span>)</h2>
-                <a th:href="@{/dashboard/create-task}">Create Task</a>
+                <a th:href="@{/home/create-task}">Create Task</a>
             </div>
             <div class="filter-container">
-                <form method="get" th:action="@{/dashboard}">
+                <form method="get" th:action="@{/home}">
                     <label for="priority">Priority:
                         <select id="priority" name="priority">
-                            <option value="">All</option>
+                            <option value=""></option>
                             <option value="LOW" th:selected="${selectedPriority == 'LOW'}">LOW</option>
                             <option value="MEDIUM" th:selected="${selectedPriority == 'MEDIUM'}">MEDIUM</option>
                             <option value="HIGH" th:selected="${selectedPriority == 'HIGH'}">HIGH</option>
@@ -39,7 +39,7 @@
                     </label>
                     <label for="status">Status:
                         <select id="status" name="status">
-                            <option value="">All</option>
+                            <option value=""></option>
                             <option value="TODO" th:selected="${selectedStatus == 'TODO'}">TODO</option>
                             <option value="IN_PROGRESS" th:selected="${selectedStatus == 'IN_PROGRESS'}">IN_PROGRESS</option>
                             <option value="DONE" th:selected="${selectedStatus == 'DONE'}">DONE</option>

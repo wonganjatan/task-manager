@@ -14,19 +14,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 @Controller
-@RequestMapping("/dashboard")
-public class DashboardController {
+@RequestMapping("/home")
+public class HomeController {
 
     private final TaskService taskService;
 
     @Autowired
-    public DashboardController(TaskService taskService) {
+    public HomeController(TaskService taskService) {
         this.taskService = taskService;
     }
 
     
     @GetMapping
-    public String dashboard(
+    public String home(
             @RequestParam(name = "priority", required = false) String priority,
             @RequestParam(name = "status", required = false) String status,
             Model model,
@@ -47,7 +47,7 @@ public class DashboardController {
         model.addAttribute("selectedPriority", priority);
         model.addAttribute("selectedStatus", status);
 
-        return "dashboard";
+        return "home";
     }
 
     @GetMapping("/create-task")
@@ -79,7 +79,7 @@ public class DashboardController {
 
         try {
             taskService.createTask(newTask);
-            return "redirect:/dashboard";
+            return "redirect:/home";
         } catch (IllegalArgumentException e) {
             model.addAttribute("authError", e.getMessage());
             return "create-task";
