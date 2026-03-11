@@ -34,9 +34,13 @@
             </form>
             <p>Do not have an account? <a th:href="@{/registration}">Register</a></p>
 
-            <div th:if="${authError}" class="error-message">
-                <p th:text="${authError}">Error Message</p>
-            </div>
+            <p th:if="${param.error}">
+                Invalid username and/or password
+            </p>
+
+            <p th:if="${param.logout}">
+                You have been logged out successfully
+            </p>
         </div>
     </div>
 </body>
