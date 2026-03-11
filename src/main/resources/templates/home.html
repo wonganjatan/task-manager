@@ -16,7 +16,7 @@
             </div>
             <div class="navbar-content">
                 <p id="welcome-user">Hi,
-                    <span th:text="${user.username}">Username</span>
+                    <span th:text="${#authentication.name}">Username</span>
                 </p>
                 <a th:href="@{/home}" id="home-link">Home</a>
                 <form th:action="@{/logout}" method="post">
