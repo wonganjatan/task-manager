@@ -40,6 +40,16 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public void editTask(Task task) {
+        if (task.getDueDate().isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("Due date cannot be in the past");
+        }
+
+        taskRepository.save(task);
+    }
+
+
+    @Override
     public void deleteTask(Long id) {
         if (!taskRepository.existsById(id)) {
             throw new IllegalArgumentException("Task is not deleted");
