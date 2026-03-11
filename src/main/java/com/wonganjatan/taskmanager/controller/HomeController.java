@@ -62,29 +62,29 @@ public class HomeController {
             return "redirect:/login";
         }
 
-        if (!model.containsAttribute("taskCreationForm")) {
-            model.addAttribute("taskCreationForm", new TaskForm());
+        if (!model.containsAttribute("taskForm")) {
+            model.addAttribute("taskForm", new TaskForm());
         }
 
-        return "create-task";
+        return "task-form";
     }
 
     @PostMapping
-    public String createTask(@Valid @ModelAttribute("taskCreationForm") TaskForm form,
+    public String createTask(@Valid @ModelAttribute("taskForm") TaskForm form,
                              BindingResult result,
                              Model model,
                              RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()){
-            return "create-task";
+            return "task-form";
         }
 
         Task newTask = new Task();
         newTask.setTitle(form.getTitle());
         newTask.setDescription(form.getDescription());
         newTask.setPriority(form.getPriority());
+        newTask.setStatus(form.getStatus());
         newTask.setDueDate(form.getDueDate());
-        newTask.setStatus(Status.TODO);
 
         try {
             taskService.createTask(newTask);
@@ -92,7 +92,7 @@ public class HomeController {
             return "redirect:/home";
         } catch (IllegalArgumentException e) {
             model.addAttribute("authError", e.getMessage());
-            return "create-task";
+            return "task-form";
         }
     }
 
