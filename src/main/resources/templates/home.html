@@ -18,6 +18,10 @@
                 <p id="welcome-user">Hi,
                     <span th:text="${#authentication.name}">Username</span>
                 </p>
+                <p id="user-role" style="color: white">(
+                    <span th:text="${#authentication.authorities[0]}" style="color: white">Username</span>
+                    )
+                </p>
                 <a th:href="@{/home}" id="home-link">Home</a>
                 <form th:action="@{/logout}" method="post">
                     <button type="submit" id="logout-button">Logout</button>
