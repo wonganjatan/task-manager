@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <title>Create Task</title>
+    <title th:text="${pageLabel}">Task Title</title>
 </head>
 <body>
     <div class="task-form-page">
         <div class="task-form-container">
-            <h2>Create Task</h2>
+            <h2 th:text="${pageLabel}">Task Header</h2>
             <form th:action="${taskId != null} ? @{/home/task/edit/{id}(id=${taskId})} : @{/home}"
                   th:object="${taskForm}" method="post" class="task-form">
                 <div class="form-group">

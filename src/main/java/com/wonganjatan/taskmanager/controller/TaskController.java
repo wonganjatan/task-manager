@@ -48,6 +48,7 @@ public class TaskController {
 
         model.addAttribute("taskForm", taskForm);
         model.addAttribute("taskId", id);
+        model.addAttribute("pageLabel", "Edit Task");
 
         return "task-form";
     }

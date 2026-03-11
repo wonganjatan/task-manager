@@ -66,6 +66,8 @@ public class HomeController {
             model.addAttribute("taskForm", new TaskForm());
         }
 
+        model.addAttribute("pageLabel", "Create Task");
+
         return "task-form";
     }
 
