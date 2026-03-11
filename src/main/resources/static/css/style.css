@@ -29,7 +29,7 @@
 
 .login-page,
 .registration-page,
-.create-task-page,
+.task-form-page,
 .view-task-page {
     display: flex;
     align-items: center;
@@ -42,7 +42,7 @@
 
 .login-container, 
 .registration-container,
-.create-task-container {
+.task-form-container {
     width: 100%;
     max-width: 400px;
     border: 1px solid black;
@@ -53,7 +53,7 @@
 
 .login-form,
 .registration-form,
-.create-task-form {
+.task-form {
     display: flex;
     flex-direction: column;
     gap: 10px;
