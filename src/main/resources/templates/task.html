@@ -9,11 +9,23 @@
 <body>
 <div class="view-task-page">
     <div class="view-task-card">
-        <h3 th:text="${task.title}">Task title</h3>
-        <p th:text="${task.description}">Task description</p>
-        <p>Priority: <span th:text="${task.priority}">Task priority</span></p>
-        <p>Status: <span th:text="${task.status}">Task status</span></p>
-        <p>Due: <span th:text="${#temporals.format(task.dueDate, 'yyyy-MM-dd HH:mm')}">Task due date (yyyy-MM-dd HH:mm)</span></p>
+        <div class="task-content">
+            <h3 th:text="${task.title}">Task title</h3>
+            <p th:text="${task.description}">Task description</p>
+            <p>Priority: <span th:text="${task.priority}">Task priority</span></p>
+            <p>Status: <span th:text="${task.status}">Task status</span></p>
+            <p>Due: <span th:text="${#temporals.format(task.dueDate, 'yyyy-MM-dd HH:mm')}">Task due date (yyyy-MM-dd HH:mm)</span></p>
+        </div>
+        <div class="task-buttons">
+            <div class="task-buttons-left">
+                <a th:href="@{/home}">Back</a>
+            </div>
+            <div class="task-buttons-right">
+                <form th:action="@{/home/task/{id}/delete(id=${task.getId()})}" method="post">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 </body>
