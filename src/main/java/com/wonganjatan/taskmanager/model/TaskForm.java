@@ -19,6 +19,9 @@ public class TaskForm {
     @NotNull(message = "Priority is required")
     private Priority priority;
 
+    @NotNull(message = "Status is required")
+    private Status status;
+
     @NotNull(message = "Due date is required")
     private LocalDateTime dueDate;
 
@@ -28,11 +31,13 @@ public class TaskForm {
     public void setTitle(String title) { this.title = title; }
     public void setDescription(String description) { this.description = description; }
     public void setPriority(Priority priority) { this.priority = priority; }
+    public void setStatus(Status status) { this.status = status; }
     public void setDueDate(LocalDateTime dueDate) { this.dueDate = dueDate; }
 
     // Getter
     public String getTitle() { return title; }
     public String getDescription() { return description; }
     public Priority getPriority() { return priority; }
+    public Status getStatus() { return status; }
     public LocalDateTime getDueDate() { return dueDate; }
 }
