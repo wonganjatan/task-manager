@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/home")
@@ -91,5 +92,21 @@ public class HomeController {
             model.addAttribute("authError", e.getMessage());
             return "create-task";
         }
+    }
+
+    @GetMapping("/task/{id}")
+    public String viewTask(@PathVariable Long id,
+                           Model model) {
+
+        Optional<Task> taskOptional = taskService.getTaskById(id);
+
+        if (taskOptional.isEmpty()) {
+            return "redirect:home";
+        }
+
+        Task task = taskOptional.get();
+        model.addAttribute("task", task);
+
+        return "task";
     }
 }
