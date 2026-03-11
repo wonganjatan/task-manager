@@ -28,13 +28,7 @@ public class TaskController {
 
     @GetMapping("/edit/{id}")
     public String showEditTaskForm(@PathVariable Long id,
-                           Model model,
-                           HttpSession session) {
-
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null) {
-            return "redirect:/login";
-        }
+                           Model model) {
 
         Optional<Task> taskOptional = taskService.getTaskById(id);
         Task task = taskOptional.get();

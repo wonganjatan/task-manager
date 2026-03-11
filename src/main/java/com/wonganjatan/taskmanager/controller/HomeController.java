@@ -8,6 +8,7 @@ import com.wonganjatan.taskmanager.service.TaskService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,15 +34,7 @@ public class HomeController {
             @RequestParam(name = "priority", required = false) String priority,
             @RequestParam(name = "status", required = false) String status,
             @RequestParam(name = "sortBy", required = false) String sortBy,
-            Model model,
-            HttpSession session) {
-
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null) {
-            return "redirect:/login";
-        }
-
-        model.addAttribute("user", loggedInUser);
+            Model model) {
 
         Collection<Task> allTasks = taskService.getAllTasks(priority, status, sortBy);
         long tasksCount = allTasks.size();
@@ -56,13 +49,7 @@ public class HomeController {
     }
 
     @GetMapping("/create-task")
-    public String showTaskCreationForm(Model model,
-                                       HttpSession session) {
-
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null) {
-            return "redirect:/login";
-        }
+    public String showTaskCreationForm(Model model) {
 
         if (!model.containsAttribute("taskForm")) {
             model.addAttribute("taskForm", new TaskForm());
