@@ -1,14 +1,16 @@
 package com.wonganjatan.taskmanager.controller;
 
 import com.wonganjatan.taskmanager.model.Task;
+import com.wonganjatan.taskmanager.model.TaskForm;
+import com.wonganjatan.taskmanager.model.User;
 import com.wonganjatan.taskmanager.service.TaskService;
-import com.wonganjatan.taskmanager.service.UserService;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
@@ -22,6 +24,62 @@ public class TaskController {
     @Autowired
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEditTaskForm(@PathVariable Long id,
+                           Model model,
+                           HttpSession session) {
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
+        Optional<Task> taskOptional = taskService.getTaskById(id);
+        Task task = taskOptional.get();
+
+        TaskForm taskForm = new TaskForm();
+        taskForm.setTitle(task.getTitle());
+        taskForm.setDescription(task.getDescription());
+        taskForm.setPriority(task.getPriority());
+        taskForm.setStatus(task.getStatus());
+        taskForm.setDueDate(task.getDueDate());
+
+        model.addAttribute("taskForm", taskForm);
+        model.addAttribute("taskId", id);
+
+        return "task-form";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editTask(@PathVariable Long id,
+                           @Valid @ModelAttribute("taskForm") TaskForm form,
+                           BindingResult result,
+                           Model model,
+                           RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()){
+            return "task-form";
+        }
+
+        Optional<Task> taskOptional = taskService.getTaskById(id);
+        Task task = taskOptional.get();
+
+        task.setTitle(form.getTitle());
+        task.setDescription(form.getDescription());
+        task.setPriority(form.getPriority());
+        task.setStatus(form.getStatus());
+        task.setDueDate(form.getDueDate());
+
+        try {
+            taskService.editTask(task);
+            redirectAttributes.addFlashAttribute("successMessage", "Task is successfully edited");
+            return "redirect:/home";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("authError", e.getMessage());
+            return "task-form";
+        }
     }
 
     @PostMapping("/{id}/delete")
