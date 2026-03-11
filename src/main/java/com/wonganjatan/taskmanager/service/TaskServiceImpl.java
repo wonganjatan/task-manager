@@ -38,4 +38,13 @@ public class TaskServiceImpl implements TaskService {
 
         taskRepository.save(task);
     }
+
+    @Override
+    public void deleteTask(Long id) {
+        if (!taskRepository.existsById(id)) {
+            throw new IllegalArgumentException("Task is not deleted");
+        }
+
+        taskRepository.deleteById(id);
+    }
 }
