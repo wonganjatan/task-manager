@@ -46,6 +46,13 @@
                             <option value="DONE" th:selected="${selectedStatus == 'DONE'}">DONE</option>
                         </select>
                     </label>
+                    <label for="sortBy">Sort by:
+                        <select id="sortBy" name="sortBy">
+                            <option value=""></option>
+                            <option value="dueDateAsc" th:selected="${selectedSortBy == 'dueDateAsc'}">Due Date ↑</option>
+                            <option value="dueDateDesc" th:selected="${selectedSortBy == 'dueDateDesc'}">Due Date ↓</option>
+                        </select>
+                    </label>
 
                     <button type="submit">Filter</button>
                 </form>

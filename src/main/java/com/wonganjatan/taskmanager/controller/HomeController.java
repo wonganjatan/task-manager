@@ -32,6 +32,7 @@ public class HomeController {
     public String home(
             @RequestParam(name = "priority", required = false) String priority,
             @RequestParam(name = "status", required = false) String status,
+            @RequestParam(name = "sortBy", required = false) String sortBy,
             Model model,
             HttpSession session) {
 
@@ -42,13 +43,14 @@ public class HomeController {
 
         model.addAttribute("user", loggedInUser);
 
-        Collection<Task> allTasks = taskService.getAllTasks(priority, status);
+        Collection<Task> allTasks = taskService.getAllTasks(priority, status, sortBy);
         long tasksCount = allTasks.size();
 
         model.addAttribute("allTasks", allTasks);
         model.addAttribute("tasksCount", tasksCount);
         model.addAttribute("selectedPriority", priority);
         model.addAttribute("selectedStatus", status);
+        model.addAttribute("selectedSortBy", sortBy);
 
         return "home";
     }
