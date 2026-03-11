@@ -21,7 +21,8 @@
                 <a th:href="@{/home}">Back</a>
             </div>
             <div class="task-buttons-right">
-                <form th:action="@{/home/task/{id}/delete(id=${task.getId()})}" method="post">
+                <a th:href="@{/home/task/edit/{id}(id=${task.id})}">Edit</a>
+                <form th:action="@{/home/task/{id}/delete(id=${task.id})}" method="post">
                     <button type="submit">Delete</button>
                 </form>
             </div>
