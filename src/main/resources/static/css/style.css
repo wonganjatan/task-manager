@@ -29,7 +29,8 @@
 
 .login-page,
 .registration-page,
-.create-task-page {
+.create-task-page,
+.view-task-page {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -106,6 +107,15 @@
 .task-card {
     width: 250px;
     height: 250px;
+    border: 1px solid black;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 10px 10px 10px black;
+}
+
+.view-task-card {
+    width: 500px;
+    height: 500px;
     border: 1px solid black;
     border-radius: 12px;
     padding: 20px;
