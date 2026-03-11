@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -22,6 +23,11 @@ public class TaskServiceImpl implements TaskService {
                 .filter(task -> priority == null || priority.isEmpty() || task.getPriority().name().equals(priority))
                 .filter(task -> status == null || status.isEmpty() || task.getStatus().name().equals(status))
                 .toList();
+    }
+
+    @Override
+    public Optional<Task> getTaskById(Long id) {
+        return taskRepository.findById(id);
     }
 
     @Override
