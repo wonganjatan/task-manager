@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -26,7 +27,6 @@ public class HomeController {
     public HomeController(TaskService taskService) {
         this.taskService = taskService;
     }
-
     
     @GetMapping
     public String home(
@@ -96,12 +96,14 @@ public class HomeController {
 
     @GetMapping("/task/{id}")
     public String viewTask(@PathVariable Long id,
-                           Model model) {
+                           Model model,
+                           RedirectAttributes redirectAttributes) {
 
         Optional<Task> taskOptional = taskService.getTaskById(id);
 
         if (taskOptional.isEmpty()) {
-            return "redirect:home";
+            redirectAttributes.addFlashAttribute("errorMessage", "Task is not found");
+            return "redirect:/home";
         }
 
         Task task = taskOptional.get();

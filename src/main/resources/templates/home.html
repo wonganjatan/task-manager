@@ -7,6 +7,8 @@
     <title>Home</title>
 </head>
 <body>
+    <p class="message success" th:if="${successMessage}" th:text="${successMessage}">Success message</p>
+    <p class="message error" th:if="${errorMessage}" th:text="${errorMessage}">Error message</p>
     <div class="home-page">
         <div class="navbar">
             <div class="navbar-header">
