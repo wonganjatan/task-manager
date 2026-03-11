@@ -72,7 +72,8 @@ public class HomeController {
     @PostMapping
     public String createTask(@Valid @ModelAttribute("taskCreationForm") TaskForm form,
                              BindingResult result,
-                             Model model) {
+                             Model model,
+                             RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()){
             return "create-task";
@@ -87,6 +88,7 @@ public class HomeController {
 
         try {
             taskService.createTask(newTask);
+            redirectAttributes.addFlashAttribute("successMessage", "Task is successfully created");
             return "redirect:/home";
         } catch (IllegalArgumentException e) {
             model.addAttribute("authError", e.getMessage());
