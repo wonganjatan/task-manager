@@ -9,7 +9,6 @@ public interface TaskService {
     Collection<Task> getAllTasks(String priority, String status);
     Optional<Task> getTaskById(Long id);
 
-    void createTask(Task task);
-    void editTask(Task task);
+    void saveTask(Task task);
     void deleteTask(Long id);
 }

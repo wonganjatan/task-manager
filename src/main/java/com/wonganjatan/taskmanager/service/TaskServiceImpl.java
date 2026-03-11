@@ -31,23 +31,13 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void createTask(Task task) {
+    public void saveTask(Task task) {
         if (task.getDueDate().isBefore(LocalDateTime.now())) {
             throw new IllegalArgumentException("Due date cannot be in the past");
         }
 
         taskRepository.save(task);
     }
-
-    @Override
-    public void editTask(Task task) {
-        if (task.getDueDate().isBefore(LocalDateTime.now())) {
-            throw new IllegalArgumentException("Due date cannot be in the past");
-        }
-
-        taskRepository.save(task);
-    }
-
 
     @Override
     public void deleteTask(Long id) {

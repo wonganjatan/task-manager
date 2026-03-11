@@ -89,7 +89,7 @@ public class HomeController {
         newTask.setDueDate(form.getDueDate());
 
         try {
-            taskService.createTask(newTask);
+            taskService.saveTask(newTask);
             redirectAttributes.addFlashAttribute("successMessage", "Task is successfully created");
             return "redirect:/home";
         } catch (IllegalArgumentException e) {

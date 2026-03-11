@@ -74,7 +74,7 @@ public class TaskController {
         task.setDueDate(form.getDueDate());
 
         try {
-            taskService.editTask(task);
+            taskService.saveTask(task);
             redirectAttributes.addFlashAttribute("successMessage", "Task is successfully edited");
             return "redirect:/home";
         } catch (IllegalArgumentException e) {
