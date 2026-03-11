@@ -47,6 +47,7 @@ public class Task {
     public void setStatus(Status status) { this.status = status; }
 
     // Getter
+    public Long getId() { return id; }
     public String getTitle() { return title; }
     public String getDescription() { return description; }
     public Priority getPriority() { return priority; }
