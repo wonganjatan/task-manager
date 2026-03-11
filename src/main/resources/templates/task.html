@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title th:text="${task.title}">Task title</title>
+</head>
+<body>
+<div class="view-task-page">
+    <div class="view-task-card">
+        <h3 th:text="${task.title}">Task title</h3>
+        <p th:text="${task.description}">Task description</p>
+        <p>Priority: <span th:text="${task.priority}">Task priority</span></p>
+        <p>Status: <span th:text="${task.status}">Task status</span></p>
+        <p>Due: <span th:text="${#temporals.format(task.dueDate, 'yyyy-MM-dd HH:mm')}">Task due date (yyyy-MM-dd HH:mm)</span></p>
+    </div>
+</div>
+</body>
+</html>
