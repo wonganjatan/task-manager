@@ -25,15 +25,17 @@ public class Task {
     @Column(nullable = false)
     private Priority priority;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Status status;
 
     @Column(nullable = false)
     private LocalDateTime dueDate;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Status status;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+
 
     public Task() {}
 
@@ -41,17 +43,18 @@ public class Task {
     public void setTitle(String title) { this.title = title; }
     public void setDescription(String description) { this.description = description; }
     public void setPriority(Priority priority) { this.priority = priority; }
+    public void setStatus(Status status) { this.status = status; }
+    public void setDueDate(LocalDateTime dueDate) { this.dueDate = dueDate; }
     @PrePersist
     protected void onCreate() { createdAt = LocalDateTime.now(); }
-    public void setDueDate(LocalDateTime dueDate) { this.dueDate = dueDate; }
-    public void setStatus(Status status) { this.status = status; }
 
     // Getter
     public Long getId() { return id; }
     public String getTitle() { return title; }
     public String getDescription() { return description; }
     public Priority getPriority() { return priority; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public LocalDateTime getDueDate() { return dueDate; }
     public Status getStatus() { return status; }
+    public LocalDateTime getDueDate() { return dueDate; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+
 }
