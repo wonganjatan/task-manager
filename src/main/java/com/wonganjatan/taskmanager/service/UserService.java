@@ -5,7 +5,6 @@ import com.wonganjatan.taskmanager.model.User;
 import java.util.Optional;
 
 public interface UserService {
-    Optional<User> login(String username, String password);
     String encodePassword(String password);
     void save(User user);
 }

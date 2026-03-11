@@ -30,24 +30,6 @@ public class AuthController {
         return "login";
     }
 
-    @PostMapping("/login")
-    public String login(
-            @RequestParam String username,
-            @RequestParam String password,
-            Model model,
-            HttpSession session) {
-
-        Optional<User> user = userService.login(username, password);
-
-        if (user.isPresent()) {
-            session.setAttribute("loggedInUser", user.get());
-            return "redirect:/home";
-        } else {
-            model.addAttribute("authError", "Invalid credentials");
-            return "login";
-        }
-    }
-
     @GetMapping("/registration")
     public String showUserRegistrationForm(Model model) {
 
@@ -81,11 +63,5 @@ public class AuthController {
             model.addAttribute("authError", e.getMessage());
             return "registration";
         }
-    }
-
-    @PostMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/login";
     }
 }
