@@ -4,7 +4,9 @@
 
 #home-link,
 #create-task-link,
-#view-button {
+#view-link,
+#back-link,
+#edit-link {
     text-decoration-line: none;
 }
 
@@ -12,6 +14,22 @@
     color: white;
     background-color: #3498DB;
     padding: 10px;
+    border-radius: 12px;
+}
+
+#view-link,
+#back-link,
+#edit-link {
+    color: white;
+    background-color: #3498DB;
+    padding: 5px;
+    border-radius: 12px;
+}
+
+#delete-button {
+    color: white;
+    background-color: red;
+    padding: 5px;
     border-radius: 12px;
 }
 
@@ -127,14 +145,6 @@
     min-height: calc(1.4em * 2);
 }
 
-#view-button {
-    color: white;
-    background-color: #3498DB;
-    padding: 5px;
-    border-radius: 12px;
-}
-
-
 .view-task-card {
     width: 400px;
     height: 400px;
@@ -142,10 +152,20 @@
     border-radius: 12px;
     padding: 20px;
     box-shadow: 10px 10px 10px black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .task-buttons {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.task-buttons-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }

@@ -40,7 +40,7 @@
                 <button type="submit">Register</button>
             </form>
 
-            <a th:href="@{/login}">Back</a>
+            <a th:href="@{/login}" id="back-link">Back</a>
 
             <div th:if="${authError}" class="error-message">
                 <p th:text="${authError}">Error Message</p>
