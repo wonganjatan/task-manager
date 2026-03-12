@@ -70,7 +70,8 @@
     box-shadow: 10px 10px 10px black;
 }
 
-.registration-container {
+.registration-container,
+.task-form-container {
     min-height: 475px;
     display: flex;
     flex-direction: column;
