@@ -70,6 +70,13 @@
     box-shadow: 10px 10px 10px black;
 }
 
+.registration-container {
+    min-height: 475px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .login-form,
 .registration-form,
 .task-form {
