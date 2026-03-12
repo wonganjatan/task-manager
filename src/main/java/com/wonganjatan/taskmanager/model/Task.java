@@ -35,7 +35,9 @@ public class Task {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "user_id")
+    private User assignedUser;
 
     public Task() {}
 
@@ -47,6 +49,7 @@ public class Task {
     public void setDueDate(LocalDateTime dueDate) { this.dueDate = dueDate; }
     @PrePersist
     protected void onCreate() { createdAt = LocalDateTime.now(); }
+    public void setAssignedUser(User assignedUser) { this.assignedUser = assignedUser; }
 
     // Getter
     public Long getId() { return id; }
@@ -56,5 +59,5 @@ public class Task {
     public Status getStatus() { return status; }
     public LocalDateTime getDueDate() { return dueDate; }
     public LocalDateTime getCreatedAt() { return createdAt; }
-
+    public User getAssignedUser() { return assignedUser; }
 }
