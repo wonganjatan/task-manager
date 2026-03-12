@@ -70,6 +70,14 @@
                         <p>Priority: <span th:text="${task.priority}">Task priority</span></p>
                         <p>Status: <span th:text="${task.status}">Task status</span></p>
                         <p>Due: <span th:text="${#temporals.format(task.dueDate, 'yyyy-MM-dd HH:mm')}">Task due date (yyyy-MM-dd HH:mm)</span></p>
+                        <p th:if="${task.assignedUser != null}">
+                            Assigned to:
+                            <span th:text="${task.assignedUser.firstName}">First name</span>
+                            <span th:text="${task.assignedUser.lastName}">Last name</span>
+                        </p>
+                        <p th:if="${task.assignedUser == null}">
+                            Assigned to: Unassigned
+                        </p>
                     </div>
                     <div class="task-card-bottom">
                         <a th:href="@{/home/task/{id}(id=${task.id})}" id="view-button">View</a>
