@@ -99,27 +99,32 @@
 
 .task-container {
     display: grid;
-    grid-template-columns: repeat(4, 250px);
+    grid-template-columns: repeat(4, 300px);
     justify-content: center;
     padding: 20px;
     gap: 25px;
 }
 
 .task-card {
-    width: 250px;
-    height: 250px;
+    width: 300px;
+    height: 300px;
     border: 1px solid black;
     border-radius: 12px;
     padding: 20px;
     box-shadow: 10px 10px 10px black;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
 }
 
 .task-card-content p {
     font-size: smaller;
+}
+
+.task-card-content p:first-of-type {
+    line-height: 1.4;
+    min-height: calc(1.4em * 2);
 }
 
 #view-button {
@@ -131,8 +136,8 @@
 
 
 .view-task-card {
-    width: 300px;
-    height: 300px;
+    width: 400px;
+    height: 400px;
     border: 1px solid black;
     border-radius: 12px;
     padding: 20px;
