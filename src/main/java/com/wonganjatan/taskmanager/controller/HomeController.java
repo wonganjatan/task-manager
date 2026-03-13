@@ -1,14 +1,12 @@
 package com.wonganjatan.taskmanager.controller;
 
-import com.wonganjatan.taskmanager.model.Status;
 import com.wonganjatan.taskmanager.model.Task;
 import com.wonganjatan.taskmanager.model.TaskForm;
 import com.wonganjatan.taskmanager.model.User;
 import com.wonganjatan.taskmanager.service.TaskService;
-import jakarta.servlet.http.HttpSession;
+import com.wonganjatan.taskmanager.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,10 +21,12 @@ import java.util.Optional;
 public class HomeController {
 
     private final TaskService taskService;
+    private final UserService userService;
 
     @Autowired
-    public HomeController(TaskService taskService) {
+    public HomeController(TaskService taskService, UserService userService) {
         this.taskService = taskService;
+        this.userService = userService;
     }
     
     @GetMapping
@@ -55,7 +55,10 @@ public class HomeController {
             model.addAttribute("taskForm", new TaskForm());
         }
 
+        Collection<User> users = userService.getAllUsers();
+
         model.addAttribute("pageLabel", "Create Task");
+        model.addAttribute("users", users);
 
         return "task-form";
     }
@@ -76,6 +79,11 @@ public class HomeController {
         newTask.setPriority(form.getPriority());
         newTask.setStatus(form.getStatus());
         newTask.setDueDate(form.getDueDate());
+        if (form.getAssignedUserId() != null) {
+            Optional<User> assignedUserOptional = userService.getUserById(form.getAssignedUserId());
+            User assignedUser = assignedUserOptional.get();
+            newTask.setAssignedUser(assignedUser);
+        }
 
         try {
             taskService.saveTask(newTask);
