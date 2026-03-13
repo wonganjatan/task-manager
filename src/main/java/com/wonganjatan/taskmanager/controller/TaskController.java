@@ -2,9 +2,7 @@ package com.wonganjatan.taskmanager.controller;
 
 import com.wonganjatan.taskmanager.model.Task;
 import com.wonganjatan.taskmanager.model.TaskForm;
-import com.wonganjatan.taskmanager.model.User;
 import com.wonganjatan.taskmanager.service.TaskService;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
