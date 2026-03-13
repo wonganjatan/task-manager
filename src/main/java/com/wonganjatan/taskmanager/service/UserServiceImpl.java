@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -45,5 +46,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
 
         userRepository.save(user);
+    }
+
+    @Override
+    public Collection<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public Optional<User> getUserById(Long id) {
+        return userRepository.findById(id);
     }
 }
