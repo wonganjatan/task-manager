@@ -6,8 +6,8 @@ VALUES
 
 INSERT INTO tasks (id, title, description, priority, status, due_date, created_at, user_id)
 VALUES
-    (1, 'Setup Project Repo', 'Initialize GitHub repo with README and .gitignore', 'HIGH', 'TODO', '2026-03-20 12:00:00', NOW(), 2),
+    (1, 'Setup Project Repo', 'Initialize GitHub repo with README', 'HIGH', 'TODO', '2026-03-20 12:00:00', NOW(), 2),
     (2, 'Write API Endpoints', 'Implement CRUD endpoints for tasks', 'MEDIUM', 'IN_PROGRESS', '2026-03-22 17:00:00', NOW(), 3),
-    (3, 'Design UI Mockups', 'Create wireframes for the task manager app', 'LOW', 'TODO', '2026-03-25 10:00:00', NOW(), NULL),
-    (4, 'Setup Database', 'Create PostgreSQL schema and tables', 'HIGH', 'DONE', '2026-03-18 15:00:00', NOW(), NULL),
-    (5, 'Email Notifications', 'Implement email reminders for tasks', 'MEDIUM', 'TODO', '2026-03-28 09:00:00', NOW(), NULL);
+    (3, 'Design UI Mockups', 'Create wireframes for the task manager', 'LOW', 'TODO', '2026-03-25 10:00:00', NOW(), 2),
+    (4, 'Setup Database', 'Create PostgreSQL schema and tables', 'HIGH', 'DONE', '2026-03-18 15:00:00', NOW(), 3),
+    (5, 'Email Notifications', 'Implement email reminders for tasks', 'MEDIUM', 'TODO', '2026-03-28 09:00:00', NOW(), 1);
