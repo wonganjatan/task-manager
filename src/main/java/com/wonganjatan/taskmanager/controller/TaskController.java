@@ -76,6 +76,8 @@ public class TaskController {
             Optional<User> assignedUserOptional = userService.getUserById(form.getAssignedUserId());
             User assignedUser = assignedUserOptional.get();
             task.setAssignedUser(assignedUser);
+        } else {
+            task.setAssignedUser(null);
         }
 
         try {

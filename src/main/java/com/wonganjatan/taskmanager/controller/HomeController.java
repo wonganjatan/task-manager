@@ -83,6 +83,8 @@ public class HomeController {
             Optional<User> assignedUserOptional = userService.getUserById(form.getAssignedUserId());
             User assignedUser = assignedUserOptional.get();
             newTask.setAssignedUser(assignedUser);
+        } else {
+            newTask.setAssignedUser(null);
         }
 
         try {
