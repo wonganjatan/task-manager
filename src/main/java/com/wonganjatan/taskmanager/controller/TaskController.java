@@ -2,7 +2,9 @@ package com.wonganjatan.taskmanager.controller;
 
 import com.wonganjatan.taskmanager.model.Task;
 import com.wonganjatan.taskmanager.model.TaskForm;
+import com.wonganjatan.taskmanager.model.User;
 import com.wonganjatan.taskmanager.service.TaskService;
+import com.wonganjatan.taskmanager.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @Controller
@@ -18,16 +21,19 @@ import java.util.Optional;
 public class TaskController {
 
     private final TaskService taskService;
+    private final UserService userService;
 
     @Autowired
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService, UserService userService) {
         this.taskService = taskService;
+        this.userService = userService;
     }
 
     @GetMapping("/edit/{id}")
     public String showEditTaskForm(@PathVariable Long id,
                            Model model) {
 
+        Collection<User> users = userService.getAllUsers();
         Optional<Task> taskOptional = taskService.getTaskById(id);
         Task task = taskOptional.get();
 
@@ -41,6 +47,8 @@ public class TaskController {
         model.addAttribute("taskForm", taskForm);
         model.addAttribute("taskId", id);
         model.addAttribute("pageLabel", "Edit Task");
+        model.addAttribute("users", users);
+
 
         return "task-form";
     }
@@ -64,6 +72,11 @@ public class TaskController {
         task.setPriority(form.getPriority());
         task.setStatus(form.getStatus());
         task.setDueDate(form.getDueDate());
+        if (form.getAssignedUserId() != null) {
+            Optional<User> assignedUserOptional = userService.getUserById(form.getAssignedUserId());
+            User assignedUser = assignedUserOptional.get();
+            task.setAssignedUser(assignedUser);
+        }
 
         try {
             taskService.saveTask(task);
