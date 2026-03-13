@@ -25,6 +25,8 @@ public class TaskForm {
     @NotNull(message = "Due date is required")
     private LocalDateTime dueDate;
 
+    private Long assignedUserId;
+
     public TaskForm() {}
 
     // Setter
@@ -33,6 +35,7 @@ public class TaskForm {
     public void setPriority(Priority priority) { this.priority = priority; }
     public void setStatus(Status status) { this.status = status; }
     public void setDueDate(LocalDateTime dueDate) { this.dueDate = dueDate; }
+    public void setAssignedUserId(Long assignedUserId) { this.assignedUserId = assignedUserId; }
 
     // Getter
     public String getTitle() { return title; }
@@ -40,4 +43,5 @@ public class TaskForm {
     public Priority getPriority() { return priority; }
     public Status getStatus() { return status; }
     public LocalDateTime getDueDate() { return dueDate; }
+    public Long getAssignedUserId() { return assignedUserId; }
 }
