@@ -59,6 +59,7 @@ public class AdminTasksController {
 
         model.addAttribute("pageTitle", "Create Task");
         model.addAttribute("users", users);
+        model.addAttribute("formSubmitButtonLabel", "Create Task");
 
         return "admin/tasks/form";
     }
@@ -134,6 +135,7 @@ public class AdminTasksController {
         model.addAttribute("taskId", id);
         model.addAttribute("pageTitle", "Edit Task");
         model.addAttribute("users", users);
+        model.addAttribute("formSubmitButtonLabel", "Edit Task");
 
 
         return "admin/tasks/form";
