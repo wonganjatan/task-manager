@@ -2,15 +2,30 @@
     box-sizing: border-box;
 }
 
-#home-link,
+.dashboard {
+    height: 100vh;
+}
+
+.dashboard,
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#dashboard-link,
+#tasks-link,
 #create-task-link,
+#list-tasks-link,
 #view-link,
 #back-link,
 #edit-link {
     text-decoration-line: none;
 }
 
-#create-task-link {
+#create-task-link,
+#list-tasks-link {
     color: white;
     background-color: #3498DB;
     padding: 10px;
@@ -34,8 +49,8 @@
 }
 
 #project-name,
-#welcome-user,
-#home-link {
+#dashboard-link,
+#tasks-link {
     color: white;
 }
 
@@ -56,7 +71,7 @@
     height: 100vh;
 }
 
-.home-page {
+.tasks-page {
 }
 
 .login-container, 
