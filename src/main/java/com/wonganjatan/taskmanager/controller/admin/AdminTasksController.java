@@ -97,7 +97,7 @@ public class AdminTasksController {
         }
     }
 
-    @GetMapping("/tasks/{id}")
+    @GetMapping("/{id}")
     public String viewTask(@PathVariable Long id,
                            Model model,
                            RedirectAttributes redirectAttributes) {
@@ -106,7 +106,7 @@ public class AdminTasksController {
 
         if (taskOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Task is not found");
-            return "redirect:/admin/dashboard";
+            return "redirect:/admin/tasks";
         }
 
         Task task = taskOptional.get();
@@ -115,7 +115,7 @@ public class AdminTasksController {
         return "admin/tasks/view";
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/{id}/edit")
     public String showEditTaskForm(@PathVariable Long id,
                            Model model) {
 
@@ -139,7 +139,7 @@ public class AdminTasksController {
         return "admin/admin-task-form";
     }
 
-    @PostMapping("/edit/{id}")
+    @PostMapping("/{id}/edit")
     public String editTask(@PathVariable Long id,
                            @Valid @ModelAttribute("taskForm") TaskForm form,
                            BindingResult result,

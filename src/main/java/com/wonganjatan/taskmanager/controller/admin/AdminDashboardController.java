@@ -21,12 +21,10 @@ import java.util.Optional;
 public class AdminDashboardController {
 
     private final TaskService taskService;
-    private final UserService userService;
 
     @Autowired
-    public AdminDashboardController(TaskService taskService, UserService userService) {
+    public AdminDashboardController(TaskService taskService) {
         this.taskService = taskService;
-        this.userService = userService;
     }
 
     @GetMapping
