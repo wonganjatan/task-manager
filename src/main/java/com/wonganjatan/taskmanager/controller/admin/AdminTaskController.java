@@ -50,7 +50,7 @@ public class AdminTaskController {
         model.addAttribute("users", users);
 
 
-        return "admin/task-form";
+        return "admin/admin-task-form";
     }
 
     @PostMapping("/edit/{id}")
@@ -61,7 +61,7 @@ public class AdminTaskController {
                            RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()){
-            return "admin/task-form";
+            return "admin/admin-task-form";
         }
 
         Optional<Task> taskOptional = taskService.getTaskById(id);
@@ -86,7 +86,7 @@ public class AdminTaskController {
             return "redirect:/admin/home";
         } catch (IllegalArgumentException e) {
             model.addAttribute("dateTimeError", e.getMessage());
-            return "admin/task-form";
+            return "admin/admin-task-form";
         }
     }
 

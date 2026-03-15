@@ -60,7 +60,7 @@ public class AdminHomeController {
         model.addAttribute("pageTitle", "Create Task");
         model.addAttribute("users", users);
 
-        return "admin/task-form";
+        return "admin/admin-task-form";
     }
 
     @PostMapping
@@ -70,7 +70,7 @@ public class AdminHomeController {
                              RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()){
-            return "admin/task-form";
+            return "admin/admin-task-form";
         }
 
         Task newTask = new Task();
@@ -93,7 +93,7 @@ public class AdminHomeController {
             return "redirect:/admin/home";
         } catch (IllegalArgumentException e) {
             model.addAttribute("dateTimeError", e.getMessage());
-            return "admin/task-form";
+            return "admin/admin-task-form";
         }
     }
 

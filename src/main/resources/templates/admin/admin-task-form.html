@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <title th:text="${pageLabel}">Task Title</title>
+    <title th:text="${pageTitle}">Task Title</title>
 </head>
 <body>
     <div class="task-form-page">
         <div class="task-form-container">
             <div class="task-form-container-top">
                 <h2 th:text="${pageLabel}">Task Header</h2>
-                <form th:action="${taskId != null} ? @{/home/task/edit/{id}(id=${taskId})} : @{/home}"
+                <form th:action="${taskId != null} ? @{/admin/home/task/edit/{id}(id=${taskId})} : @{/admin/home}"
                       th:object="${taskForm}" method="post" class="task-form">
                     <div class="form-group">
                         <label for="title">Title:</label>
@@ -59,11 +59,11 @@
                 </form>
             </div>
             <div class="task-form-container-bottom">
-                <a th:href="@{/home}" id="back-link">Back</a>
+                <a th:href="@{/admin/home}" id="back-link">Back</a>
 
             </div>
-            <div th:if="${authError}" class="error-message">
-                <p th:text="${authError}">Error Message</p>
+            <div th:if="${dateTimeError}" class="error-message">
+                <p th:text="${dateTimeError}">Error Message</p>
             </div>
         </div>
     </div>
