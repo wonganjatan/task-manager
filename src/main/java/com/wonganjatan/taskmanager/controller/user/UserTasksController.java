@@ -1,5 +1,6 @@
 package com.wonganjatan.taskmanager.controller.user;
 
+import com.wonganjatan.taskmanager.model.Status;
 import com.wonganjatan.taskmanager.model.Task;
 import com.wonganjatan.taskmanager.model.TaskForm;
 import com.wonganjatan.taskmanager.model.User;
@@ -70,5 +71,40 @@ public class UserTasksController {
         model.addAttribute("task", task);
 
         return "user/tasks/view";
+    }
+
+    @PostMapping("/{id}/status")
+    public String updateTaskStatus(@PathVariable Long id,
+                                   @RequestParam Status status,
+                                   Authentication authentication,
+                                   Model model,
+                                   RedirectAttributes redirectAttributes) {
+
+        String username = authentication.getName();
+        Optional<User> userOptional = userService.getUserByUsername(username);
+        User user = userOptional.get();
+
+        Optional<Task> taskOptional = taskService.getTaskById(id);
+
+        if (taskOptional.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Task not Found");
+            return "redirect:/user/tasks";
+        }
+
+        Task task = taskOptional.get();
+
+        if (!task.getAssignedUser().getId().equals(user.getId())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Unauthorized action");
+            return "redirect:/user/tasks";
+        }
+
+        model.addAttribute("task", task);
+
+        task.setStatus(status);
+        taskService.saveTask(task);
+
+        redirectAttributes.addFlashAttribute("successMessage", "Task is successfully updated");
+
+        return "redirect:/user/tasks/" + id;
     }
 }
