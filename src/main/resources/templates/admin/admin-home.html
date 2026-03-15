@@ -22,7 +22,7 @@
                     <span th:text="${#authentication.authorities[0]}" style="color: white">Username</span>
                     )
                 </p>
-                <a th:href="@{/home}" id="home-link">Home</a>
+                <a th:href="@{/admin/home}" id="home-link">Home</a>
                 <form th:action="@{/logout}" method="post">
                     <button type="submit" id="logout-button">Logout</button>
                 </form>
@@ -33,7 +33,7 @@
                 <h2>Tasks (<span th:text="${tasksCount}">Task count</span>)</h2>
             </div>
             <div class="content-container">
-                <form method="get" th:action="@{/home}">
+                <form method="get" th:action="@{/admin/home}">
                     <label for="priority">Priority:
                         <select id="priority" name="priority">
                             <option value=""></option>
@@ -60,7 +60,7 @@
 
                     <button type="submit">Filter</button>
                 </form>
-                <a th:href="@{/home/create-task}" id="create-task-link">Create Task</a>
+                <a th:href="@{/admin/home/create-task}" id="create-task-link">Create Task</a>
             </div>
             <div class="task-container">
                 <div class="task-card" th:each="task : ${allTasks}">
@@ -80,7 +80,7 @@
                         </p>
                     </div>
                     <div class="task-card-bottom">
-                        <a th:href="@{/home/task/{id}(id=${task.id})}" id="view-link">View</a>
+                        <a th:href="@{/admin/home/task/{id}(id=${task.id})}" id="view-link">View</a>
                     </div>
                 </div>
             </div>
