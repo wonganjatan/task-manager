@@ -18,11 +18,13 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                     .requestMatchers("/login", "/registration", "/css/**").permitAll()
+                    .requestMatchers("/admin/**").hasRole("ADMIN")
+                    .requestMatchers("/user/**").hasRole("USER")
                     .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                     .loginPage("/login")
-                    .defaultSuccessUrl("/home", true)
+                    .successHandler(new LoginSuccessHandler())
                     .permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll);
