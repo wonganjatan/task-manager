@@ -26,11 +26,11 @@
         </div>
         <div class="task-buttons">
             <div class="task-buttons-left">
-                <a th:href="@{/home}" id="back-link">Back</a>
+                <a th:href="@{/admin/home}" id="back-link">Back</a>
             </div>
             <div class="task-buttons-right">
-                <a th:href="@{/home/task/edit/{id}(id=${task.id})}" id="edit-link">Edit</a>
-                <form th:action="@{/home/task/{id}/delete(id=${task.id})}" method="post">
+                <a th:href="@{/admin/home/task/edit/{id}(id=${task.id})}" id="edit-link">Edit</a>
+                <form th:action="@{/admin/home/task/{id}/delete(id=${task.id})}" method="post">
                     <button type="submit" id="delete-button">Delete</button>
                 </form>
             </div>
