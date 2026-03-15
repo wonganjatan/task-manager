@@ -90,7 +90,7 @@ public class AdminTasksController {
         try {
             taskService.saveTask(newTask);
             redirectAttributes.addFlashAttribute("successMessage", "Task is successfully created");
-            return "redirect:/admin/dashboard";
+            return "redirect:/admin/tasks";
         } catch (IllegalArgumentException e) {
             model.addAttribute("dateTimeError", e.getMessage());
             return "admin/tasks/form";
@@ -136,7 +136,7 @@ public class AdminTasksController {
         model.addAttribute("users", users);
 
 
-        return "admin/admin-task-form";
+        return "admin/tasks/form";
     }
 
     @PostMapping("/{id}/edit")
@@ -147,7 +147,7 @@ public class AdminTasksController {
                            RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()){
-            return "admin/admin-task-form";
+            return "admin/tasks/form";
         }
 
         Optional<Task> taskOptional = taskService.getTaskById(id);
@@ -169,10 +169,10 @@ public class AdminTasksController {
         try {
             taskService.saveTask(task);
             redirectAttributes.addFlashAttribute("successMessage", "Task is successfully edited");
-            return "redirect:/admin/home";
+            return "redirect:/admin/tasks";
         } catch (IllegalArgumentException e) {
             model.addAttribute("dateTimeError", e.getMessage());
-            return "admin/admin-task-form";
+            return "admin/tasks/form";
         }
     }
 
@@ -187,6 +187,6 @@ public class AdminTasksController {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
 
-        return "redirect:/admin/home";
+        return "redirect:/admin/tasks";
     }
 }
