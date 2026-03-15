@@ -11,7 +11,7 @@
         <div class="task-form-container">
             <div class="task-form-container-top">
                 <h2 th:text="${pageTitle}">Task Header</h2>
-                <form th:action="${taskId != null} ? @{/admin/home/task/edit/{id}(id=${taskId})} : @{/admin/home}"
+                <form th:action="${taskId != null} ? @{/admin/tasks/{id}/edit(id=${taskId})} : @{/admin/tasks}"
                       th:object="${taskForm}" method="post" class="task-form">
                     <div class="form-group">
                         <label for="title">Title:</label>
@@ -55,7 +55,7 @@
                         <p th:if="${#fields.hasErrors('assignedUserId')}" th:errors="*{assignedUserId}">Error message</p>
                     </div>
 
-                    <button type="submit">Create Task</button>
+                    <button type="submit"><span th:text="${formSubmitButtonLabel}">Create/Edit Task</span></button>
                 </form>
             </div>
             <div class="task-form-container-bottom">
