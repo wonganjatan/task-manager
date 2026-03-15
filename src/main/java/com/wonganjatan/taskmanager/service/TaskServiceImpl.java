@@ -37,6 +37,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public long getTaskCount() {
+        return taskRepository.count();
+    }
+
+    @Override
     public Optional<Task> getTaskById(Long id) {
         return taskRepository.findById(id);
     }
