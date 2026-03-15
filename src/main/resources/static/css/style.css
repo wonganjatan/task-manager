@@ -87,7 +87,7 @@
 
 .registration-container,
 .task-form-container {
-    min-height: 475px;
+    min-height: 550px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
