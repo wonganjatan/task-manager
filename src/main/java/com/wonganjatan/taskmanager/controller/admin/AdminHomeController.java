@@ -1,4 +1,4 @@
-package com.wonganjatan.taskmanager.controller;
+package com.wonganjatan.taskmanager.controller.admin;
 
 import com.wonganjatan.taskmanager.model.Task;
 import com.wonganjatan.taskmanager.model.TaskForm;
@@ -17,14 +17,14 @@ import java.util.Collection;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/home")
-public class HomeController {
+@RequestMapping("/admin/home")
+public class AdminHomeController {
 
     private final TaskService taskService;
     private final UserService userService;
 
     @Autowired
-    public HomeController(TaskService taskService, UserService userService) {
+    public AdminHomeController(TaskService taskService, UserService userService) {
         this.taskService = taskService;
         this.userService = userService;
     }
@@ -45,7 +45,7 @@ public class HomeController {
         model.addAttribute("selectedStatus", status);
         model.addAttribute("selectedSortBy", sortBy);
 
-        return "home";
+        return "admin/admin-home";
     }
 
     @GetMapping("/create-task")
@@ -57,10 +57,10 @@ public class HomeController {
 
         Collection<User> users = userService.getAllUsers();
 
-        model.addAttribute("pageLabel", "Create Task");
+        model.addAttribute("pageTitle", "Create Task");
         model.addAttribute("users", users);
 
-        return "task-form";
+        return "admin/task-form";
     }
 
     @PostMapping
@@ -70,7 +70,7 @@ public class HomeController {
                              RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()){
-            return "task-form";
+            return "admin/task-form";
         }
 
         Task newTask = new Task();
@@ -90,10 +90,10 @@ public class HomeController {
         try {
             taskService.saveTask(newTask);
             redirectAttributes.addFlashAttribute("successMessage", "Task is successfully created");
-            return "redirect:/home";
+            return "redirect:/admin/home";
         } catch (IllegalArgumentException e) {
-            model.addAttribute("authError", e.getMessage());
-            return "task-form";
+            model.addAttribute("dateTimeError", e.getMessage());
+            return "admin/task-form";
         }
     }
 
@@ -106,12 +106,12 @@ public class HomeController {
 
         if (taskOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Task is not found");
-            return "redirect:/home";
+            return "redirect:/admin/home";
         }
 
         Task task = taskOptional.get();
         model.addAttribute("task", task);
 
-        return "task";
+        return "admin/admin-task";
     }
 }
