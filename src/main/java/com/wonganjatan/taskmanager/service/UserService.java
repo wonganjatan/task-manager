@@ -10,4 +10,5 @@ public interface UserService {
     void save(User user);
     Collection<User> getAllUsers();
     Optional<User> getUserById(Long id);
+    Optional<User> getUserByUsername(String username);
 }
