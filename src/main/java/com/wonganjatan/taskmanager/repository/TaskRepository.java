@@ -1,9 +1,11 @@
 package com.wonganjatan.taskmanager.repository;
 
 import com.wonganjatan.taskmanager.model.Task;
+import com.wonganjatan.taskmanager.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
+    long countByAssignedUserId(Long id);
 }
