@@ -1,4 +1,4 @@
-package com.wonganjatan.taskmanager.controller;
+package com.wonganjatan.taskmanager.controller.admin;
 
 import com.wonganjatan.taskmanager.model.Task;
 import com.wonganjatan.taskmanager.model.TaskForm;
@@ -17,14 +17,14 @@ import java.util.Collection;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/home/task")
-public class TaskController {
+@RequestMapping("/admin/home/task")
+public class AdminTaskController {
 
     private final TaskService taskService;
     private final UserService userService;
 
     @Autowired
-    public TaskController(TaskService taskService, UserService userService) {
+    public AdminTaskController(TaskService taskService, UserService userService) {
         this.taskService = taskService;
         this.userService = userService;
     }
@@ -46,11 +46,11 @@ public class TaskController {
 
         model.addAttribute("taskForm", taskForm);
         model.addAttribute("taskId", id);
-        model.addAttribute("pageLabel", "Edit Task");
+        model.addAttribute("pageTitle", "Edit Task");
         model.addAttribute("users", users);
 
 
-        return "task-form";
+        return "admin/task-form";
     }
 
     @PostMapping("/edit/{id}")
@@ -61,7 +61,7 @@ public class TaskController {
                            RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()){
-            return "task-form";
+            return "admin/task-form";
         }
 
         Optional<Task> taskOptional = taskService.getTaskById(id);
@@ -83,10 +83,10 @@ public class TaskController {
         try {
             taskService.saveTask(task);
             redirectAttributes.addFlashAttribute("successMessage", "Task is successfully edited");
-            return "redirect:/home";
+            return "redirect:/admin/home";
         } catch (IllegalArgumentException e) {
-            model.addAttribute("authError", e.getMessage());
-            return "task-form";
+            model.addAttribute("dateTimeError", e.getMessage());
+            return "admin/task-form";
         }
     }
 
@@ -101,6 +101,6 @@ public class TaskController {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
 
-        return "redirect:/home";
+        return "redirect:/admin/home";
     }
 }
