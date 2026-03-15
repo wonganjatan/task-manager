@@ -10,7 +10,7 @@
     <div class="task-form-page">
         <div class="task-form-container">
             <div class="task-form-container-top">
-                <h2 th:text="${pageLabel}">Task Header</h2>
+                <h2 th:text="${pageTitle}">Task Header</h2>
                 <form th:action="${taskId != null} ? @{/admin/home/task/edit/{id}(id=${taskId})} : @{/admin/home}"
                       th:object="${taskForm}" method="post" class="task-form">
                     <div class="form-group">
@@ -59,7 +59,7 @@
                 </form>
             </div>
             <div class="task-form-container-bottom">
-                <a th:href="@{/admin/home}" id="back-link">Back</a>
+                <a th:href="@{/admin}" id="back-link">Back</a>
 
             </div>
             <div th:if="${dateTimeError}" class="error-message">
