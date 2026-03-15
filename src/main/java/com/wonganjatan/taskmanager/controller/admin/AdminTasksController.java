@@ -17,16 +17,102 @@ import java.util.Collection;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/admin/home/task")
-public class AdminTaskController {
+@RequestMapping("/admin/tasks")
+public class AdminTasksController {
 
     private final TaskService taskService;
     private final UserService userService;
 
     @Autowired
-    public AdminTaskController(TaskService taskService, UserService userService) {
+    public AdminTasksController(TaskService taskService, UserService userService) {
         this.taskService = taskService;
         this.userService = userService;
+    }
+
+    @GetMapping
+    public String taskList(
+            @RequestParam(name = "priority", required = false) String priority,
+            @RequestParam(name = "status", required = false) String status,
+            @RequestParam(name = "sortBy", required = false) String sortBy,
+            Model model) {
+
+        Collection<Task> allTasks = taskService.getAllTasks(priority, status, sortBy);
+        long tasksCount = allTasks.size();
+
+        model.addAttribute("allTasks", allTasks);
+        model.addAttribute("tasksCount", tasksCount);
+        model.addAttribute("selectedPriority", priority);
+        model.addAttribute("selectedStatus", status);
+        model.addAttribute("selectedSortBy", sortBy);
+
+        return "admin/tasks/list";
+    }
+
+    @GetMapping("/new")
+    public String showTaskCreationForm(Model model) {
+
+        if (!model.containsAttribute("taskForm")) {
+            model.addAttribute("taskForm", new TaskForm());
+        }
+
+        Collection<User> users = userService.getAllUsers();
+
+        model.addAttribute("pageTitle", "Create Task");
+        model.addAttribute("users", users);
+
+        return "admin/tasks/form";
+    }
+
+    @PostMapping
+    public String createTask(@Valid @ModelAttribute("taskForm") TaskForm form,
+                             BindingResult result,
+                             Model model,
+                             RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()){
+            return "admin/tasks/form";
+        }
+
+        Task newTask = new Task();
+        newTask.setTitle(form.getTitle());
+        newTask.setDescription(form.getDescription());
+        newTask.setPriority(form.getPriority());
+        newTask.setStatus(form.getStatus());
+        newTask.setDueDate(form.getDueDate());
+        if (form.getAssignedUserId() != null) {
+            Optional<User> assignedUserOptional = userService.getUserById(form.getAssignedUserId());
+            User assignedUser = assignedUserOptional.get();
+            newTask.setAssignedUser(assignedUser);
+        } else {
+            newTask.setAssignedUser(null);
+        }
+
+        try {
+            taskService.saveTask(newTask);
+            redirectAttributes.addFlashAttribute("successMessage", "Task is successfully created");
+            return "redirect:/admin/dashboard";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("dateTimeError", e.getMessage());
+            return "admin/tasks/form";
+        }
+    }
+
+    @GetMapping("/tasks/{id}")
+    public String viewTask(@PathVariable Long id,
+                           Model model,
+                           RedirectAttributes redirectAttributes) {
+
+        Optional<Task> taskOptional = taskService.getTaskById(id);
+
+        if (taskOptional.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Task is not found");
+            return "redirect:/admin/dashboard";
+        }
+
+        Task task = taskOptional.get();
+        model.addAttribute("task", task);
+
+        return "admin/tasks/view";
     }
 
     @GetMapping("/edit/{id}")
