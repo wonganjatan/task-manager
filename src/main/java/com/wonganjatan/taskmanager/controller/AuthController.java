@@ -1,19 +1,22 @@
 package com.wonganjatan.taskmanager.controller;
 
+import com.wonganjatan.taskmanager.model.LoginForm;
 import com.wonganjatan.taskmanager.model.Role;
 import com.wonganjatan.taskmanager.model.User;
 import com.wonganjatan.taskmanager.model.UserForm;
 import com.wonganjatan.taskmanager.service.UserService;
 
 import jakarta.validation.Valid;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.Map;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AuthController {
     private final UserService userService;
 
@@ -21,28 +24,23 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @GetMapping("/login")
-    public String loginForm() {
-        return "login";
-    }
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@Valid @RequestBody LoginForm form) {
 
-    @GetMapping("/registration")
-    public String showUserRegistrationForm(Model model) {
-
-        model.addAttribute("userRegistrationForm", new UserForm());
-
-        return "registration";
+        try {
+            Optional<User> user = userService.login(form);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(Map.of("message", "Successfully logged in"));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(Map.of("error", "Username and/or password are incorrect"));
+        }
     }
 
     @PostMapping("/registration")
-    public String registerUser(
-            @Valid @ModelAttribute("userRegistrationForm") UserForm form,
-            BindingResult result,
-            Model model) {
-
-        if (result.hasErrors()) {
-            return "registration";
-        }
+    public ResponseEntity<?> registration(
+            @Valid
+            @RequestBody UserForm form) {
 
         User user = new User();
         user.setFirstName(form.getFirstName());
@@ -54,10 +52,12 @@ public class AuthController {
 
         try {
             userService.save(user);
-            return "redirect:/login";
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(Map.of("message", "Registered"));
+
         } catch (IllegalArgumentException e) {
-            model.addAttribute("authError", e.getMessage());
-            return "registration";
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(Map.of("error", e.getMessage()));
         }
     }
 }
