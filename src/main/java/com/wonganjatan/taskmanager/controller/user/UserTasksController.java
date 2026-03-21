@@ -2,16 +2,12 @@ package com.wonganjatan.taskmanager.controller.user;
 
 import com.wonganjatan.taskmanager.model.Status;
 import com.wonganjatan.taskmanager.model.Task;
-import com.wonganjatan.taskmanager.model.TaskForm;
 import com.wonganjatan.taskmanager.model.User;
 import com.wonganjatan.taskmanager.service.TaskService;
 import com.wonganjatan.taskmanager.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -33,13 +29,12 @@ public class UserTasksController {
 
     @GetMapping
     public String taskList(
-            Authentication authentication,
             @RequestParam(name = "priority", required = false) String priority,
-            @RequestParam(name = "status", required = false) String status,
+            @RequestParam(name = "sttus", required = false) String status,
             @RequestParam(name = "sortBy", required = false) String sortBy,
             Model model) {
 
-        String username = authentication.getName();
+        String username = "johndoe";
         Optional<User> userOptional = userService.getUserByUsername(username);
         User user = userOptional.get();
 
@@ -76,11 +71,10 @@ public class UserTasksController {
     @PostMapping("/{id}/status")
     public String updateTaskStatus(@PathVariable Long id,
                                    @RequestParam Status status,
-                                   Authentication authentication,
                                    Model model,
                                    RedirectAttributes redirectAttributes) {
 
-        String username = authentication.getName();
+        String username = "johndoe";
         Optional<User> userOptional = userService.getUserByUsername(username);
         User user = userOptional.get();
 
