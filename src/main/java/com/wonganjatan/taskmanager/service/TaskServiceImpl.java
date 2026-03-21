@@ -1,6 +1,7 @@
 package com.wonganjatan.taskmanager.service;
 
 import com.wonganjatan.taskmanager.model.Task;
+import com.wonganjatan.taskmanager.model.User;
 import com.wonganjatan.taskmanager.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +21,15 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Collection<Task> getAllTasks(String priority, String status, String dueDate) {
+    public Collection<Task> getAllTasks(String priority, String status, String sortBy) {
         Stream<Task> stream = taskRepository.findAll().stream()
                 .filter(task -> priority == null || priority.isEmpty() || task.getPriority().name().equals(priority))
                 .filter(task -> status == null || status.isEmpty() || task.getStatus().name().equals(status));
 
-        if (dueDate != null) {
-            if ("ASCENDING".equals(dueDate)) {
+        if (sortBy != null) {
+            if (sortBy.equals("dueDateAsc")) {
                 stream = stream.sorted(Comparator.comparing(Task::getDueDate));
-            } else if ("DESCENDING".equals(dueDate)) {
+            } else if (sortBy.equals("dueDateDesc")) {
                 stream = stream.sorted(Comparator.comparing(Task::getDueDate).reversed());
             }
         }
