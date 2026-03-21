@@ -33,7 +33,7 @@ public class AuthController {
                     .body(Map.of("message", "Successfully logged in"));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(Map.of("error", "Username and/or password are incorrect"));
+                    .body(Map.of("error", e.getMessage()));
         }
     }
 
