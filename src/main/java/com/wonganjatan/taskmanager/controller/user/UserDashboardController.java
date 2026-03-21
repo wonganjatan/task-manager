@@ -4,7 +4,6 @@ import com.wonganjatan.taskmanager.model.User;
 import com.wonganjatan.taskmanager.service.TaskService;
 import com.wonganjatan.taskmanager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +25,9 @@ public class UserDashboardController {
     }
 
     @GetMapping
-    public String dashboard(Authentication authentication, Model model) {
+    public String dashboard(Model model) {
 
-        String username = authentication.getName();
+        String username = "a";
         Optional<User> userOptional = userService.getUserByUsername(username);
         User user = userOptional.get();
         long taskCount = taskService.getTaskCountByAssignedUser(user.getId());
