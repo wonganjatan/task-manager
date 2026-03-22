@@ -11,7 +11,7 @@ public class LoginForm {
     private String password;
 
     // Setter
-    public void setUsername(String username) { this.username = username; }
+    public void setUsername(String username) { this.username = username.toLowerCase(); }
     public void setPassword(String password) { this.password = password; }
 
     // Getter
