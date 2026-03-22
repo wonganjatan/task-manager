@@ -1,6 +1,5 @@
-package com.wonganjatan.taskmanager.model.entity;
+package com.wonganjatan.taskmanager.model;
 
-import com.wonganjatan.taskmanager.model.Role;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;

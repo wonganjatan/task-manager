@@ -1,10 +1,9 @@
 package com.wonganjatan.taskmanager.controller;
 
 import com.wonganjatan.taskmanager.model.*;
-import com.wonganjatan.taskmanager.model.entity.User;
-import com.wonganjatan.taskmanager.model.form.LoginForm;
-import com.wonganjatan.taskmanager.model.form.UserForm;
-import com.wonganjatan.taskmanager.model.response.AuthResponse;
+import com.wonganjatan.taskmanager.model.User;
+import com.wonganjatan.taskmanager.model.LoginForm;
+import com.wonganjatan.taskmanager.model.UserForm;
 import com.wonganjatan.taskmanager.service.JwtService;
 import com.wonganjatan.taskmanager.service.UserService;
 
@@ -14,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -31,21 +31,21 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginForm form) {
+    public ResponseEntity<Map<String, String>> login(@Valid @RequestBody LoginForm form) {
 
         try {
             Optional<User> user = userService.login(form);
             String token = jwtService.generateToken(user.get());
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(new AuthResponse(token));
+                    .body(Map.of("token", token));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(new AuthResponse(true, e.getMessage()));
+                    .body(Map.of("message", e.getMessage()));
         }
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<?> registration(
+    public ResponseEntity<Map<String, String>> registration(
             @Valid
             @RequestBody UserForm form) {
 
@@ -60,11 +60,11 @@ public class AuthController {
         try {
             userService.save(user);
             return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(new AuthResponse(false, "Registered"));
+                    .body(Map.of("message", "Registration successful"));
 
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(new AuthResponse(true, e.getMessage()));
+                    .body(Map.of("message", e.getMessage()));
         }
     }
 }

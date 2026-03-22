@@ -1,6 +1,6 @@
 package com.wonganjatan.taskmanager.repository;
 
-import com.wonganjatan.taskmanager.model.entity.User;
+import com.wonganjatan.taskmanager.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

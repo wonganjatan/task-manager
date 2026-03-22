@@ -1,6 +1,6 @@
 package com.wonganjatan.taskmanager.service;
 
-import com.wonganjatan.taskmanager.model.entity.User;
+import com.wonganjatan.taskmanager.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -23,7 +23,7 @@ public class JwtServiceImpl implements JwtService {
                 .setSubject(user.getUsername())
                 .claim("role", user.getRole())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 30))
                 .signWith(key)
                 .compact();
     }

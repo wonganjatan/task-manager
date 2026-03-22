@@ -1,8 +1,8 @@
 package com.wonganjatan.taskmanager.controller.user;
 
 import com.wonganjatan.taskmanager.model.Status;
-import com.wonganjatan.taskmanager.model.entity.Task;
-import com.wonganjatan.taskmanager.model.entity.User;
+import com.wonganjatan.taskmanager.model.Task;
+import com.wonganjatan.taskmanager.model.User;
 import com.wonganjatan.taskmanager.service.TaskService;
 import com.wonganjatan.taskmanager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,5 @@
-package com.wonganjatan.taskmanager.model.entity;
+package com.wonganjatan.taskmanager.model;
 
-import com.wonganjatan.taskmanager.model.Priority;
-import com.wonganjatan.taskmanager.model.Status;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;

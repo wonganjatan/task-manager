@@ -1,13 +1,11 @@
 package com.wonganjatan.taskmanager.controller.admin;
 
-import com.wonganjatan.taskmanager.model.entity.Task;
-import com.wonganjatan.taskmanager.model.form.TaskForm;
-import com.wonganjatan.taskmanager.model.entity.User;
+import com.wonganjatan.taskmanager.model.Task;
+import com.wonganjatan.taskmanager.model.TaskForm;
+import com.wonganjatan.taskmanager.model.User;
 import com.wonganjatan.taskmanager.service.JwtService;
 import com.wonganjatan.taskmanager.service.TaskService;
 import com.wonganjatan.taskmanager.service.UserService;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,115 +40,151 @@ public class AdminTasksController {
             @RequestParam(name = "status", required = false) String status,
             @RequestParam(name = "dueDate", required = false) String dueDate) {
 
-        validateToken(token);
+        try {
+            String role = jwtService.getRoleFromToken(token);
+            if (!role.equals("ADMIN")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("message", "You are not allowed to perform this operation"));
+            }
 
-        Map<String, Object> response = new HashMap<>();
-        Collection<Task> tasks = taskService.getAllTasks(priority, status, dueDate);
-        long totalTasks = tasks.size();
-        response.put("tasks", tasks);
-        response.put("totalTasks", totalTasks);
+            Map<String, Object> response = new HashMap<>();
+            Collection<Task> tasks = taskService.getAllTasks(priority, status, dueDate);
+            long totalTasks = tasks.size();
+            response.put("tasks", tasks);
+            response.put("totalTasks", totalTasks);
 
-        return ResponseEntity.ok(response);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("message", e.getMessage()));
+        }
     }
 
     @PostMapping("/new")
-    public ResponseEntity<Map<String, String>> createTask(@Valid @RequestBody TaskForm form) {
-
-        Task newTask = new Task();
-        newTask.setTitle(form.getTitle());
-        newTask.setDescription(form.getDescription());
-        newTask.setPriority(form.getPriority());
-        newTask.setStatus(form.getStatus());
-        System.out.println("Form: " + form.getAssignedUserId());
-        if (form.getAssignedUserId() != null) {
-            Optional<User> assignedUserOptional = userService.getUserById(form.getAssignedUserId());
-            User assignedUser = assignedUserOptional.get();
-            newTask.setAssignedUser(assignedUser);
-        } else {
-            newTask.setAssignedUser(null);
-        }
-        newTask.setDueDate(form.getDueDate());
-
-        System.out.println(newTask.getAssignedUser());
+    public ResponseEntity<Map<String, String>> createTask(@RequestHeader("Authorization") String token,
+                                                          @Valid @RequestBody TaskForm form) {
 
         try {
-            taskService.saveTask(newTask);
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(Map.of("message", "Task created successfully"));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(Map.of("error", e.getMessage()));
+            String role = jwtService.getRoleFromToken(token);
+            if (!role.equals("ADMIN")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("message", "You are not allowed to perform this operation"));
+            }
+
+            Task newTask = new Task();
+            newTask.setTitle(form.getTitle());
+            newTask.setDescription(form.getDescription());
+            newTask.setPriority(form.getPriority());
+            newTask.setStatus(form.getStatus());
+            if (form.getAssignedUserId() != null) {
+                Optional<User> assignedUserOptional = userService.getUserById(form.getAssignedUserId());
+                User assignedUser = assignedUserOptional.get();
+                newTask.setAssignedUser(assignedUser);
+            } else {
+                newTask.setAssignedUser(null);
+            }
+            newTask.setDueDate(form.getDueDate());
+
+            try {
+                taskService.saveTask(newTask);
+                return ResponseEntity.status(HttpStatus.CREATED)
+                        .body(Map.of("message", "Task created successfully"));
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.status(HttpStatus.CONFLICT)
+                        .body(Map.of("message", e.getMessage()));
+            }
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
+    public ResponseEntity<?> getTaskById(@RequestHeader("Authorization") String token,
+            @PathVariable Long id) {
 
-        Optional<Task> taskOptional = taskService.getTaskById(id);
+        try {
+            String role = jwtService.getRoleFromToken(token);
+            if (!role.equals("ADMIN")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("message", "You are not allowed to access this resources"));
+            }
+            Optional<Task> taskOptional = taskService.getTaskById(id);
 
-        if (taskOptional.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            if (taskOptional.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            Task task = taskOptional.get();
+
+            return ResponseEntity.ok(task);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("message", e.getMessage()));
         }
-
-        Task task = taskOptional.get();
-
-        return ResponseEntity.ok(task);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Map<String, String>> editTask(@PathVariable Long id,
-                           @Valid @RequestBody TaskForm form) {
-
-        Optional<Task> taskOptional = taskService.getTaskById(id);
-        if (taskOptional.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        Task task = taskOptional.get();
-
-        task.setTitle(form.getTitle());
-        task.setDescription(form.getDescription());
-        task.setPriority(form.getPriority());
-        task.setStatus(form.getStatus());
-        task.setDueDate(form.getDueDate());
-        if (form.getAssignedUserId() != null) {
-            Optional<User> assignedUserOptional = userService.getUserById(form.getAssignedUserId());
-            User assignedUser = assignedUserOptional.get();
-            task.setAssignedUser(assignedUser);
-        } else {
-            task.setAssignedUser(null);
-        }
+    public ResponseEntity<Map<String, String>> editTask(@RequestHeader("Authorization") String token,
+                                      @PathVariable Long id,
+                                      @Valid @RequestBody TaskForm form) {
 
         try {
-            taskService.saveTask(task);
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(Map.of("message", "Task edited successfully"));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(Map.of("error", e.getMessage()));
+            String role = jwtService.getRoleFromToken(token);
+            if (!role.equals("ADMIN")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("message", "You are not allowed to access this resources"));
+            }
+            Optional<Task> taskOptional = taskService.getTaskById(id);
+            if (taskOptional.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(Map.of("message", "Task not found"));
+            }
+            Task task = taskOptional.get();
+
+            task.setTitle(form.getTitle());
+            task.setDescription(form.getDescription());
+            task.setPriority(form.getPriority());
+            task.setStatus(form.getStatus());
+            task.setDueDate(form.getDueDate());
+            if (form.getAssignedUserId() != null) {
+                Optional<User> assignedUserOptional = userService.getUserById(form.getAssignedUserId());
+                User assignedUser = assignedUserOptional.get();
+                task.setAssignedUser(assignedUser);
+            } else {
+                task.setAssignedUser(null);
+            }
+
+            try {
+                taskService.saveTask(task);
+                return ResponseEntity.status(HttpStatus.OK)
+                        .body(Map.of("message", "Task updated successfully"));
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.status(HttpStatus.CONFLICT)
+                        .body(Map.of("message", e.getMessage()));
+            }
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("message", e.getMessage()));
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
+    public ResponseEntity<?> deleteTask(@RequestHeader("Authorization") String token,
+                                                         @PathVariable Long id) {
 
-        try {
-            taskService.deleteTask(id);
-            return ResponseEntity.noContent().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    private void validateToken(String token) {
         try {
             String role = jwtService.getRoleFromToken(token);
             if (!role.equals("ADMIN")) {
-                throw new RuntimeException("Forbidden: You cannot access this resource");
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body(Map.of("message", "You are not allowed to access this resources"));
             }
-        } catch (ExpiredJwtException e) {
-            throw new RuntimeException("Unauthorized: Token has expired");
-        } catch (JwtException e) {
-            throw new RuntimeException("Unauthorized: Invalid token");
+
+            taskService.deleteTask(id);
+
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+                    .body(Map.of("message", e.getMessage()));
         }
     }
 }

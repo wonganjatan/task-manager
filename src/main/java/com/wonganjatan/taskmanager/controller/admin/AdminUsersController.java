@@ -1,6 +1,6 @@
 package com.wonganjatan.taskmanager.controller.admin;
 
-import com.wonganjatan.taskmanager.model.entity.User;
+import com.wonganjatan.taskmanager.model.User;
 import com.wonganjatan.taskmanager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

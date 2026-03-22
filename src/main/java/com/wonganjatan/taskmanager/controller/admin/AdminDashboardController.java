@@ -1,12 +1,13 @@
 package com.wonganjatan.taskmanager.controller.admin;
 
-import com.wonganjatan.taskmanager.model.response.AdminDashboardResponse;
 import com.wonganjatan.taskmanager.service.JwtService;
 import com.wonganjatan.taskmanager.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -23,21 +24,20 @@ public class AdminDashboardController {
     }
 
     @GetMapping("/dashboard")
-    public ResponseEntity<AdminDashboardResponse> getTotalTasks(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<Map<String,?>> getTotalTasks(@RequestHeader("Authorization") String token) {
         try {
             String role = jwtService.getRoleFromToken(token);
             if (!role.equals("ADMIN")) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                        .body(new AdminDashboardResponse(
-                                "You are not allowed to access this resource"));
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("message", "You are not allowed to access this resource!"));
             }
 
             long totalTasks = taskService.getTotalTasks();
 
-            return ResponseEntity.ok(new AdminDashboardResponse(totalTasks));
+            return ResponseEntity.ok(Map.of("totalTasks", totalTasks));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new AdminDashboardResponse(e.getMessage()));
+                    .body(Map.of("message", e.getMessage()));
         }
     }
 }

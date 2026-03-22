@@ -1,4 +1,4 @@
-package com.wonganjatan.taskmanager.model.form;
+package com.wonganjatan.taskmanager.model;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
