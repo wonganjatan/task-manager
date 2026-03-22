@@ -1,7 +1,6 @@
 package com.wonganjatan.taskmanager.service;
 
-import com.wonganjatan.taskmanager.model.Task;
-import com.wonganjatan.taskmanager.model.User;
+import com.wonganjatan.taskmanager.model.entity.Task;
 
 import java.util.Collection;
 import java.util.Optional;

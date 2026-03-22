@@ -1,6 +1,10 @@
 package com.wonganjatan.taskmanager.controller;
 
 import com.wonganjatan.taskmanager.model.*;
+import com.wonganjatan.taskmanager.model.entity.User;
+import com.wonganjatan.taskmanager.model.form.LoginForm;
+import com.wonganjatan.taskmanager.model.form.UserForm;
+import com.wonganjatan.taskmanager.model.response.AuthResponse;
 import com.wonganjatan.taskmanager.service.JwtService;
 import com.wonganjatan.taskmanager.service.UserService;
 
@@ -10,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
 import java.util.Optional;
 
 @RestController

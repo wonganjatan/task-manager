@@ -1,7 +1,6 @@
 package com.wonganjatan.taskmanager.service;
 
-import com.wonganjatan.taskmanager.model.User;
-import io.jsonwebtoken.Claims;
+import com.wonganjatan.taskmanager.model.entity.User;
 
 public interface JwtService {
     String generateToken(User user);

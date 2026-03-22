@@ -1,6 +1,6 @@
 package com.wonganjatan.taskmanager.controller.admin;
 
-import com.wonganjatan.taskmanager.model.AdminDashboardResponse;
+import com.wonganjatan.taskmanager.model.response.AdminDashboardResponse;
 import com.wonganjatan.taskmanager.service.JwtService;
 import com.wonganjatan.taskmanager.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;

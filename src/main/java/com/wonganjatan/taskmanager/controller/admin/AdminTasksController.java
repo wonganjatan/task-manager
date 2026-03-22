@@ -1,10 +1,13 @@
 package com.wonganjatan.taskmanager.controller.admin;
 
-import com.wonganjatan.taskmanager.model.Task;
-import com.wonganjatan.taskmanager.model.TaskForm;
-import com.wonganjatan.taskmanager.model.User;
+import com.wonganjatan.taskmanager.model.entity.Task;
+import com.wonganjatan.taskmanager.model.form.TaskForm;
+import com.wonganjatan.taskmanager.model.entity.User;
+import com.wonganjatan.taskmanager.service.JwtService;
 import com.wonganjatan.taskmanager.service.TaskService;
 import com.wonganjatan.taskmanager.service.UserService;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,18 +26,23 @@ public class AdminTasksController {
 
     private final TaskService taskService;
     private final UserService userService;
+    private final JwtService jwtService;
 
     @Autowired
-    public AdminTasksController(TaskService taskService, UserService userService) {
+    public AdminTasksController(TaskService taskService, UserService userService, JwtService jwtService) {
         this.taskService = taskService;
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> getAllTasks(
+            @RequestHeader("Authorization") String token,
             @RequestParam(name = "priority", required = false) String priority,
             @RequestParam(name = "status", required = false) String status,
             @RequestParam(name = "dueDate", required = false) String dueDate) {
+
+        validateToken(token);
 
         Map<String, Object> response = new HashMap<>();
         Collection<Task> tasks = taskService.getAllTasks(priority, status, dueDate);
@@ -130,6 +138,19 @@ public class AdminTasksController {
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    private void validateToken(String token) {
+        try {
+            String role = jwtService.getRoleFromToken(token);
+            if (!role.equals("ADMIN")) {
+                throw new RuntimeException("Forbidden: You cannot access this resource");
+            }
+        } catch (ExpiredJwtException e) {
+            throw new RuntimeException("Unauthorized: Token has expired");
+        } catch (JwtException e) {
+            throw new RuntimeException("Unauthorized: Invalid token");
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.wonganjatan.taskmanager.service;
 
-import com.wonganjatan.taskmanager.model.LoginForm;
-import com.wonganjatan.taskmanager.model.User;
+import com.wonganjatan.taskmanager.model.form.LoginForm;
+import com.wonganjatan.taskmanager.model.entity.User;
 
 import java.util.Collection;
 import java.util.Optional;

@@ -1,5 +1,7 @@
-package com.wonganjatan.taskmanager.model;
+package com.wonganjatan.taskmanager.model.form;
 
+import com.wonganjatan.taskmanager.model.Priority;
+import com.wonganjatan.taskmanager.model.Status;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
