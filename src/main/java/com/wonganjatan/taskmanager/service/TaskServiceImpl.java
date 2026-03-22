@@ -55,7 +55,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public long getTaskCount() {
+    public long getTotalTasks() {
         return taskRepository.count();
     }
 

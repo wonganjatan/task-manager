@@ -10,7 +10,7 @@ public interface TaskService {
     Collection<Task> getAllTasks(String priority, String status, String dueDate);
     Collection<Task> getAllTasksByAssignedUser(Long id, String priority, String status, String sortBy);
     Optional<Task> getTaskById(Long id);
-    long getTaskCount();
+    long getTotalTasks();
     long getTaskCountByAssignedUser(Long id);
 
     void saveTask(Task task);
