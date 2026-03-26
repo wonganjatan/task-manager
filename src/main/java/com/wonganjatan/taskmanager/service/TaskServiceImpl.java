@@ -1,6 +1,6 @@
 package com.wonganjatan.taskmanager.service;
 
-import com.wonganjatan.taskmanager.model.Task;
+import com.wonganjatan.taskmanager.model.entity.Task;
 import com.wonganjatan.taskmanager.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
@@ -60,7 +60,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public long getTaskCountByAssignedUser(Long id) {
+    public long getTotalTasksByAssignedUser(Long id) {
         return taskRepository.countByAssignedUserId(id);
     }
 

@@ -1,7 +1,7 @@
 package com.wonganjatan.taskmanager.service;
 
-import com.wonganjatan.taskmanager.model.LoginForm;
-import com.wonganjatan.taskmanager.model.User;
+import com.wonganjatan.taskmanager.model.dto.LoginForm;
+import com.wonganjatan.taskmanager.model.entity.User;
 import com.wonganjatan.taskmanager.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

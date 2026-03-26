@@ -1,4 +1,4 @@
-package com.wonganjatan.taskmanager.model;
+package com.wonganjatan.taskmanager.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
 

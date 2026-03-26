@@ -1,5 +1,7 @@
-package com.wonganjatan.taskmanager.model;
+package com.wonganjatan.taskmanager.model.dto;
 
+import com.wonganjatan.taskmanager.model.entity.enums.Priority;
+import com.wonganjatan.taskmanager.model.entity.enums.Status;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

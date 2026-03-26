@@ -1,9 +1,9 @@
 package com.wonganjatan.taskmanager.controller;
 
-import com.wonganjatan.taskmanager.model.*;
-import com.wonganjatan.taskmanager.model.User;
-import com.wonganjatan.taskmanager.model.LoginForm;
-import com.wonganjatan.taskmanager.model.UserForm;
+import com.wonganjatan.taskmanager.model.entity.User;
+import com.wonganjatan.taskmanager.model.dto.LoginForm;
+import com.wonganjatan.taskmanager.model.dto.UserForm;
+import com.wonganjatan.taskmanager.model.entity.enums.Role;
 import com.wonganjatan.taskmanager.service.JwtService;
 import com.wonganjatan.taskmanager.service.UserService;
 
