@@ -1,5 +1,6 @@
 package com.wonganjatan.taskmanager.service;
 
+import com.wonganjatan.taskmanager.exception.LoginException;
 import com.wonganjatan.taskmanager.model.dto.LoginForm;
 import com.wonganjatan.taskmanager.model.entity.User;
 import com.wonganjatan.taskmanager.repository.UserRepository;
@@ -22,10 +23,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> login(LoginForm form) {
         Optional<User> user = Optional.of(userRepository.findByUsername(form.getUsername())
-                .orElseThrow(() -> new IllegalArgumentException("Username does not exist")));
+                .orElseThrow(() -> new LoginException("Username does not exist")));
 
         if (!passwordEncoder.matches(form.getPassword(), user.get().getPassword())) {
-            throw new IllegalArgumentException("Password is incorrect");
+            throw new LoginException("Password is incorrect");
         }
 
         return user;

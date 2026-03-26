@@ -31,17 +31,12 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@Valid @RequestBody LoginForm form) {
+    public ResponseEntity<Map<String, Object>> login(@Valid @RequestBody LoginForm form) {
 
-        try {
-            Optional<User> user = userService.login(form);
-            String token = jwtService.generateToken(user.get());
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(Map.of("token", token));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(Map.of("message", e.getMessage()));
-        }
+        Optional<User> user = userService.login(form);
+        String token = jwtService.generateToken(user.get());
+
+        return ResponseEntity.ok(Map.of("token", token));
     }
 
     @PostMapping("/registration")

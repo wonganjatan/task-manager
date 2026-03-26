@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(LoginException.class)
-    public ResponseEntity<Object> handleUnauthorizedException(LoginException e, WebRequest request) {
+    public ResponseEntity<Object> handleLoginException(LoginException e, WebRequest request) {
         Map<String, Object> response = new HashMap<>();
         response.put("timestamp", LocalDate.now());
         response.put("status", HttpStatus.UNAUTHORIZED.value());
