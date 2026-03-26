@@ -25,8 +25,8 @@ public class GlobalExceptionHandler {
         return new  ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<Object> handleUnauthorizedException(UnauthorizedException e, WebRequest request) {
+    @ExceptionHandler(LoginException.class)
+    public ResponseEntity<Object> handleUnauthorizedException(LoginException e, WebRequest request) {
         Map<String, Object> response = new HashMap<>();
         response.put("timestamp", LocalDate.now());
         response.put("status", HttpStatus.UNAUTHORIZED.value());
