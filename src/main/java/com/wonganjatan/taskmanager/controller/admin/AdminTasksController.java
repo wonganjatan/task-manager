@@ -1,5 +1,6 @@
 package com.wonganjatan.taskmanager.controller.admin;
 
+import com.wonganjatan.taskmanager.exception.TaskNotFound;
 import com.wonganjatan.taskmanager.model.entity.Task;
 import com.wonganjatan.taskmanager.model.dto.TaskForm;
 import com.wonganjatan.taskmanager.model.entity.User;
@@ -95,7 +96,7 @@ public class AdminTasksController {
         }
         Optional<Task> taskOptional = taskService.getTaskById(id);
         if (taskOptional.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new TaskNotFound("Task not found");
         }
 
         Task task = taskOptional.get();
@@ -115,8 +116,7 @@ public class AdminTasksController {
         }
         Optional<Task> taskOptional = taskService.getTaskById(id);
         if (taskOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Map.of("message", "Task not found"));
+            throw new TaskNotFound("Task not found");
         }
         Task task = taskOptional.get();
 

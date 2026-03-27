@@ -109,4 +109,16 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(TaskNotFound.class)
+    public ResponseEntity<Object> handleTaskNotFound(TaskNotFound e, WebRequest request) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("timestamp", LocalDate.now());
+        response.put("status", HttpStatus.NOT_FOUND.value());
+        response.put("error", "Task not found");
+        response.put("message", e.getMessage());
+        response.put("path", request.getDescription(false).replace("uri=", ""));
+
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
 }

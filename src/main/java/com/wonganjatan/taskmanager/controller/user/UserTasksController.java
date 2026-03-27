@@ -1,5 +1,6 @@
 package com.wonganjatan.taskmanager.controller.user;
 
+import com.wonganjatan.taskmanager.exception.TaskNotFound;
 import com.wonganjatan.taskmanager.model.entity.enums.Status;
 import com.wonganjatan.taskmanager.model.entity.Task;
 import com.wonganjatan.taskmanager.model.entity.User;
@@ -58,21 +59,18 @@ public class UserTasksController {
     }
 
     @GetMapping("/{id}")
-    public String viewTask(@PathVariable Long id,
-                           Model model,
-                           RedirectAttributes redirectAttributes) {
+    public ResponseEntity<Map<String, Object>> viewTask(@RequestHeader("Authorization") String token,
+                           @PathVariable Long id) {
 
         Optional<Task> taskOptional = taskService.getTaskById(id);
 
         if (taskOptional.isEmpty()) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Task is not found");
-            return "redirect:/user/tasks";
+            throw new TaskNotFound("Task not found");
         }
 
         Task task = taskOptional.get();
-        model.addAttribute("task", task);
 
-        return "user/tasks/view";
+        return null;
     }
 
     @PostMapping("/{id}/status")
