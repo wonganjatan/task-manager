@@ -39,8 +39,8 @@ public class AuthController {
         return ResponseEntity.ok(Map.of("token", token));
     }
 
-    @PostMapping("/registration")
-    public ResponseEntity<Map<String, String>> registration(
+    @PostMapping("/register")
+    public ResponseEntity<Map<String, Object>> registration(
             @Valid
             @RequestBody UserForm form) {
 
@@ -52,14 +52,8 @@ public class AuthController {
         user.setPassword(userService.encodePassword(form.getPassword()));
         user.setRole(Role.USER);
 
-        try {
-            userService.save(user);
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(Map.of("message", "Registration successful"));
-
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(Map.of("message", e.getMessage()));
-        }
+        userService.save(user);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(Map.of("message", "Registration successful"));
     }
 }

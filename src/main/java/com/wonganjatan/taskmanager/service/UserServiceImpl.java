@@ -1,6 +1,7 @@
 package com.wonganjatan.taskmanager.service;
 
-import com.wonganjatan.taskmanager.exception.LoginException;
+import com.wonganjatan.taskmanager.exception.auth.LoginException;
+import com.wonganjatan.taskmanager.exception.auth.UsernameAlreadyExistException;
 import com.wonganjatan.taskmanager.model.dto.LoginForm;
 import com.wonganjatan.taskmanager.model.entity.User;
 import com.wonganjatan.taskmanager.repository.UserRepository;
@@ -41,7 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         if (userRepository.existsByUsername(user.getUsername())) {
-            throw new IllegalArgumentException("Username is already exist");
+            throw new UsernameAlreadyExistException("Username is already exist");
         }
 
         userRepository.save(user);
