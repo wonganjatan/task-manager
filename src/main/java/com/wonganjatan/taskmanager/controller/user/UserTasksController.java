@@ -59,7 +59,7 @@ public class UserTasksController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> viewTask(@RequestHeader("Authorization") String token,
+    public ResponseEntity<Object> viewTask(@RequestHeader("Authorization") String token,
                            @PathVariable Long id) {
 
         Optional<Task> taskOptional = taskService.getTaskById(id);
@@ -70,7 +70,7 @@ public class UserTasksController {
 
         Task task = taskOptional.get();
 
-        return null;
+        return ResponseEntity.ok(task);
     }
 
     @PostMapping("/{id}/status")
