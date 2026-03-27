@@ -25,19 +25,14 @@ public class AdminDashboardController {
 
     @GetMapping("/dashboard")
     public ResponseEntity<Map<String,?>> getTotalTasks(@RequestHeader("Authorization") String token) {
-        try {
-            String role = jwtService.getRoleFromToken(token);
-            if (!role.equals("ADMIN")) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                        .body(Map.of("message", "You are not allowed to access this resource!"));
-            }
-
-            long totalTasks = taskService.getTotalTasks();
-
-            return ResponseEntity.ok(Map.of("totalTasks", totalTasks));
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("message", e.getMessage()));
+        String role = jwtService.getRoleFromToken(token);
+        if (!role.equals("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("message", "You are not allowed to access this resource!"));
         }
+
+        long totalTasks = taskService.getTotalTasks();
+
+        return ResponseEntity.ok(Map.of("totalTasks", totalTasks));
     }
 }

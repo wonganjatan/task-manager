@@ -1,5 +1,7 @@
 package com.wonganjatan.taskmanager.service;
 
+import com.wonganjatan.taskmanager.exception.jwt.ExpiredJwtTokenException;
+import com.wonganjatan.taskmanager.exception.jwt.InvalidJwtTokenException;
 import com.wonganjatan.taskmanager.model.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -38,9 +40,9 @@ public class JwtServiceImpl implements JwtService {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (ExpiredJwtException e) {
-            throw new RuntimeException("Token is expired");
+            throw new ExpiredJwtTokenException("Token is expired");
         } catch (JwtException e) {
-            throw new RuntimeException("Token is invalid");
+            throw new InvalidJwtTokenException("Token is invalid");
         }
     }
 

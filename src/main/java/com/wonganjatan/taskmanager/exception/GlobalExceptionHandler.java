@@ -2,6 +2,8 @@ package com.wonganjatan.taskmanager.exception;
 
 import com.wonganjatan.taskmanager.exception.auth.LoginException;
 import com.wonganjatan.taskmanager.exception.auth.UsernameAlreadyExistException;
+import com.wonganjatan.taskmanager.exception.jwt.ExpiredJwtTokenException;
+import com.wonganjatan.taskmanager.exception.jwt.InvalidJwtTokenException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -72,27 +74,27 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ForbiddenException.class)
-    public ResponseEntity<Object> handleForbiddenException(ForbiddenException e, WebRequest request) {
+    @ExceptionHandler(ExpiredJwtTokenException.class)
+    public ResponseEntity<Object> handleExpiredJwtTokenException(ExpiredJwtTokenException e, WebRequest request) {
         Map<String, Object> response = new HashMap<>();
         response.put("timestamp", LocalDate.now());
-        response.put("status", HttpStatus.FORBIDDEN.value());
-        response.put("error", "Forbidden");
+        response.put("status", HttpStatus.UNAUTHORIZED.value());
+        response.put("error", "Unauthorized");
         response.put("message", e.getMessage());
         response.put("path", request.getDescription(false).replace("uri=", ""));
 
-        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<Object> handleNotFoundException(NotFoundException e, WebRequest request) {
+    @ExceptionHandler(InvalidJwtTokenException.class)
+    public ResponseEntity<Object> handleInvalidJwtTokenException(InvalidJwtTokenException e, WebRequest request) {
         Map<String, Object> response = new HashMap<>();
         response.put("timestamp", LocalDate.now());
-        response.put("status", HttpStatus.NOT_FOUND.value());
-        response.put("error", "Not Found");
+        response.put("status", HttpStatus.UNAUTHORIZED.value());
+        response.put("error", "Unauthorized");
         response.put("message", e.getMessage());
         response.put("path", request.getDescription(false).replace("uri=", ""));
 
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 }
