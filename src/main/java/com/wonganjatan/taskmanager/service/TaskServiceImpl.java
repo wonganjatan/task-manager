@@ -1,5 +1,6 @@
 package com.wonganjatan.taskmanager.service;
 
+import com.wonganjatan.taskmanager.exception.InvalidDateException;
 import com.wonganjatan.taskmanager.model.entity.Task;
 import com.wonganjatan.taskmanager.repository.TaskRepository;
 import org.springframework.stereotype.Service;
@@ -72,7 +73,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void saveTask(Task task) {
         if (task.getDueDate().isBefore(LocalDateTime.now())) {
-            throw new IllegalArgumentException("Due date cannot be in the past");
+            throw new InvalidDateException("Due date cannot be in the past");
         }
 
         taskRepository.save(task);
@@ -80,10 +81,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void deleteTask(Long id) {
-        if (!taskRepository.existsById(id)) {
-            throw new IllegalArgumentException("Task is not deleted");
-        }
-
         taskRepository.deleteById(id);
     }
 }

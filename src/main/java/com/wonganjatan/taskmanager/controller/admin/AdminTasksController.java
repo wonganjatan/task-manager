@@ -40,87 +40,67 @@ public class AdminTasksController {
             @RequestParam(name = "status", required = false) String status,
             @RequestParam(name = "dueDate", required = false) String dueDate) {
 
-        try {
-            String role = jwtService.getRoleFromToken(token);
-            if (!role.equals("ADMIN")) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                        .body(Map.of("message", "You are not allowed to perform this operation"));
-            }
-
-            Map<String, Object> response = new HashMap<>();
-            Collection<Task> tasks = taskService.getAllTasks(priority, status, dueDate);
-            long totalTasks = tasks.size();
-            response.put("tasks", tasks);
-            response.put("totalTasks", totalTasks);
-
-            return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
+        String role = jwtService.getRoleFromToken(token);
+        if (!role.equals("ADMIN")) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("message", e.getMessage()));
+                    .body(Map.of("message", "You are not allowed to perform this operation"));
         }
+
+        Map<String, Object> response = new HashMap<>();
+        Collection<Task> tasks = taskService.getAllTasks(priority, status, dueDate);
+        long totalTasks = tasks.size();
+        response.put("tasks", tasks);
+        response.put("totalTasks", totalTasks);
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/new")
-    public ResponseEntity<Map<String, String>> createTask(@RequestHeader("Authorization") String token,
+    public ResponseEntity<Map<String, Object>> createTask(@RequestHeader("Authorization") String token,
                                                           @Valid @RequestBody TaskForm form) {
 
-        try {
-            String role = jwtService.getRoleFromToken(token);
-            if (!role.equals("ADMIN")) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                        .body(Map.of("message", "You are not allowed to perform this operation"));
-            }
-
-            Task newTask = new Task();
-            newTask.setTitle(form.getTitle());
-            newTask.setDescription(form.getDescription());
-            newTask.setPriority(form.getPriority());
-            newTask.setStatus(form.getStatus());
-            if (form.getAssignedUserId() != null) {
-                Optional<User> assignedUserOptional = userService.getUserById(form.getAssignedUserId());
-                User assignedUser = assignedUserOptional.get();
-                newTask.setAssignedUser(assignedUser);
-            } else {
-                newTask.setAssignedUser(null);
-            }
-            newTask.setDueDate(form.getDueDate());
-
-            try {
-                taskService.saveTask(newTask);
-                return ResponseEntity.status(HttpStatus.CREATED)
-                        .body(Map.of("message", "Task created successfully"));
-            } catch (IllegalArgumentException e) {
-                return ResponseEntity.status(HttpStatus.CONFLICT)
-                        .body(Map.of("message", e.getMessage()));
-            }
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        String role = jwtService.getRoleFromToken(token);
+        if (!role.equals("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("message", "You are not allowed to perform this operation"));
         }
+
+        Task newTask = new Task();
+        newTask.setTitle(form.getTitle());
+        newTask.setDescription(form.getDescription());
+        newTask.setPriority(form.getPriority());
+        newTask.setStatus(form.getStatus());
+        if (form.getAssignedUserId() != null) {
+            Optional<User> assignedUserOptional = userService.getUserById(form.getAssignedUserId());
+            User assignedUser = assignedUserOptional.get();
+            newTask.setAssignedUser(assignedUser);
+        } else {
+            newTask.setAssignedUser(null);
+        }
+        newTask.setDueDate(form.getDueDate());
+
+        taskService.saveTask(newTask);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(Map.of("message", "Task created successfully"));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getTaskById(@RequestHeader("Authorization") String token,
             @PathVariable Long id) {
 
-        try {
-            String role = jwtService.getRoleFromToken(token);
-            if (!role.equals("ADMIN")) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                        .body(Map.of("message", "You are not allowed to access this resources"));
-            }
-            Optional<Task> taskOptional = taskService.getTaskById(id);
-
-            if (taskOptional.isEmpty()) {
-                return ResponseEntity.notFound().build();
-            }
-
-            Task task = taskOptional.get();
-
-            return ResponseEntity.ok(task);
-        } catch (RuntimeException e) {
+        String role = jwtService.getRoleFromToken(token);
+        if (!role.equals("ADMIN")) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("message", e.getMessage()));
+                    .body(Map.of("message", "You are not allowed to access this resources"));
         }
+        Optional<Task> taskOptional = taskService.getTaskById(id);
+        if (taskOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Task task = taskOptional.get();
+
+        return ResponseEntity.ok(task);
     }
 
     @PutMapping("/{id}")
@@ -128,63 +108,48 @@ public class AdminTasksController {
                                       @PathVariable Long id,
                                       @Valid @RequestBody TaskForm form) {
 
-        try {
-            String role = jwtService.getRoleFromToken(token);
-            if (!role.equals("ADMIN")) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                        .body(Map.of("message", "You are not allowed to access this resources"));
-            }
-            Optional<Task> taskOptional = taskService.getTaskById(id);
-            if (taskOptional.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(Map.of("message", "Task not found"));
-            }
-            Task task = taskOptional.get();
-
-            task.setTitle(form.getTitle());
-            task.setDescription(form.getDescription());
-            task.setPriority(form.getPriority());
-            task.setStatus(form.getStatus());
-            task.setDueDate(form.getDueDate());
-            if (form.getAssignedUserId() != null) {
-                Optional<User> assignedUserOptional = userService.getUserById(form.getAssignedUserId());
-                User assignedUser = assignedUserOptional.get();
-                task.setAssignedUser(assignedUser);
-            } else {
-                task.setAssignedUser(null);
-            }
-
-            try {
-                taskService.saveTask(task);
-                return ResponseEntity.status(HttpStatus.OK)
-                        .body(Map.of("message", "Task updated successfully"));
-            } catch (IllegalArgumentException e) {
-                return ResponseEntity.status(HttpStatus.CONFLICT)
-                        .body(Map.of("message", e.getMessage()));
-            }
-        } catch (RuntimeException e) {
+        String role = jwtService.getRoleFromToken(token);
+        if (!role.equals("ADMIN")) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("message", e.getMessage()));
+                    .body(Map.of("message", "You are not allowed to access this resources"));
         }
+        Optional<Task> taskOptional = taskService.getTaskById(id);
+        if (taskOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("message", "Task not found"));
+        }
+        Task task = taskOptional.get();
+
+        task.setTitle(form.getTitle());
+        task.setDescription(form.getDescription());
+        task.setPriority(form.getPriority());
+        task.setStatus(form.getStatus());
+        task.setDueDate(form.getDueDate());
+        if (form.getAssignedUserId() != null) {
+            Optional<User> assignedUserOptional = userService.getUserById(form.getAssignedUserId());
+            User assignedUser = assignedUserOptional.get();
+            task.setAssignedUser(assignedUser);
+        } else {
+            task.setAssignedUser(null);
+        }
+
+        taskService.saveTask(task);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(Map.of("message", "Task updated successfully"));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteTask(@RequestHeader("Authorization") String token,
                                                          @PathVariable Long id) {
 
-        try {
-            String role = jwtService.getRoleFromToken(token);
-            if (!role.equals("ADMIN")) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                        .body(Map.of("message", "You are not allowed to access this resources"));
-            }
-
-            taskService.deleteTask(id);
-
-            return ResponseEntity.noContent().build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
-                    .body(Map.of("message", e.getMessage()));
+        String role = jwtService.getRoleFromToken(token);
+        if (!role.equals("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("message", "You are not allowed to access this resources"));
         }
+
+        taskService.deleteTask(id);
+
+        return ResponseEntity.noContent().build();
     }
 }
