@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/dashboard")
+@RequestMapping("/api/user/dashboard")
 @CrossOrigin(origins = "http://localhost:5173")
 public class UserDashboardController {
 
@@ -31,20 +31,12 @@ public class UserDashboardController {
     @GetMapping
     public ResponseEntity<Map<String, Object>> dashboard(@RequestHeader("Authorization") String token) {
 
-        try {
-            String username = jwtService.getUsernameFromToken(token);
-            Optional<User> userOptional = userService.getUserByUsername(username);
-            User user = userOptional.get();
-            long totalTasks = taskService.getTotalTasksByAssignedUser(user.getId());
+        String username = jwtService.getUsernameFromToken(token);
+        Optional<User> userOptional = userService.getUserByUsername(username);
+        User user = userOptional.get();
+        long totalTasks = taskService.getTotalTasksByAssignedUser(user.getId());
 
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(Map.of("totalTasks", totalTasks));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("message", e.getMessage()));
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("message", e.getMessage()));
-        }
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(Map.of("totalTasks", totalTasks));
     }
 }
