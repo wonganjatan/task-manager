@@ -1,4 +1,4 @@
-package com.wonganjatan.taskmanager.exception;
+package com.wonganjatan.taskmanager.exception.auth;
 
 public class LoginException extends RuntimeException {
     public LoginException(String message) {
