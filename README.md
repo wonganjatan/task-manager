@@ -3,7 +3,6 @@ A full-stack task management app built that let users to create, assign, and upd
 ### Frontend:
 - React
 - Tailwind CSS
-- Axios
 
 ### Backend:
 - Java
@@ -34,3 +33,17 @@ Backend: https://github.com/wonganjatan/task-manager
 
 ## API Endpoints
 ![API endpoints](src/main/resources/static/API-endpoints.png)
+
+## Tools
+- Git
+- VS Code for Frontend
+- IntelliJ for Backend
+- Windows Subsystem for Linux (WSL)
+- React
+- Tailwind css
+- npm
+- Java
+- Spring Boot
+- Maven
+- PostgreSQL
+- Basic JWT
