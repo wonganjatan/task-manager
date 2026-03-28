@@ -31,3 +31,8 @@ Backend: https://github.com/wonganjatan/task-manager
 - For Admin: can create, assign task to users, edit, and delete tasks
 - For User: can only view tasks only assigned to them and update the task status
 - Both users can use the filter function to find their desired tasks
+
+## API Endpoints
+| Method | Path                       | Description                                |
+| GET    | /api/auth/login            | User can login and JWT token generated     |
+| POST   | /api/auth/register         | User can register to Task Manager          |
