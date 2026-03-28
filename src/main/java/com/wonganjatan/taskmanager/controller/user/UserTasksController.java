@@ -93,8 +93,6 @@ public class UserTasksController {
 
         if (task.getAssignedUser().getId().equals(user.getId())) {
             taskService.updateTaskStatus(id, newStatus.getStatus());
-//            task.setStatus(newStatus.getStatus());
-//            taskService.saveTask(task);
             return ResponseEntity.ok(task);
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
