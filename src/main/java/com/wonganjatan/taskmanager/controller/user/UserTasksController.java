@@ -1,6 +1,7 @@
 package com.wonganjatan.taskmanager.controller.user;
 
 import com.wonganjatan.taskmanager.exception.TaskNotFound;
+import com.wonganjatan.taskmanager.model.dto.UpdateStatus;
 import com.wonganjatan.taskmanager.model.entity.enums.Status;
 import com.wonganjatan.taskmanager.model.entity.Task;
 import com.wonganjatan.taskmanager.model.entity.User;
@@ -38,7 +39,7 @@ public class UserTasksController {
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> taskList(
-            @RequestHeader("Authorization")  String token,
+            @RequestHeader("Authorization") String token,
             @RequestParam(name = "priority", required = false) String priority,
             @RequestParam(name = "status", required = false) String status,
             @RequestParam(name = "sortBy", required = false) String sortBy
@@ -73,37 +74,31 @@ public class UserTasksController {
         return ResponseEntity.ok(task);
     }
 
-    @PostMapping("/{id}/status")
-    public String updateTaskStatus(@PathVariable Long id,
-                                   @RequestParam Status status,
-                                   Model model,
-                                   RedirectAttributes redirectAttributes) {
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Object> updateTaskStatus(
+            @RequestHeader("Authorization") String token,
+            @PathVariable Long id,
+            @RequestBody UpdateStatus newStatus) {
 
-        String username = "d";
+        String username = jwtService.getUsernameFromToken(token);
         Optional<User> userOptional = userService.getUserByUsername(username);
         User user = userOptional.get();
 
         Optional<Task> taskOptional = taskService.getTaskById(id);
-
         if (taskOptional.isEmpty()) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Task not Found");
-            return "redirect:/user/tasks";
+            throw new TaskNotFound("Task not found");
         }
 
         Task task = taskOptional.get();
 
-        if (!task.getAssignedUser().getId().equals(user.getId())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Unauthorized action");
-            return "redirect:/user/tasks";
+        if (task.getAssignedUser().getId().equals(user.getId())) {
+            taskService.updateTaskStatus(id, newStatus.getStatus());
+//            task.setStatus(newStatus.getStatus());
+//            taskService.saveTask(task);
+            return ResponseEntity.ok(task);
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("message", "Forbidden to perform this operation"));
         }
-
-        model.addAttribute("task", task);
-
-        task.setStatus(status);
-        taskService.saveTask(task);
-
-        redirectAttributes.addFlashAttribute("successMessage", "Task is successfully updated");
-
-        return "redirect:/user/tasks/" + id;
     }
 }

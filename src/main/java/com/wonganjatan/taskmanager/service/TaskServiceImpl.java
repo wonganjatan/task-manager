@@ -2,7 +2,9 @@ package com.wonganjatan.taskmanager.service;
 
 import com.wonganjatan.taskmanager.exception.InvalidDateException;
 import com.wonganjatan.taskmanager.model.entity.Task;
+import com.wonganjatan.taskmanager.model.entity.enums.Status;
 import com.wonganjatan.taskmanager.repository.TaskRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -82,5 +84,11 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void deleteTask(Long id) {
         taskRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void updateTaskStatus(Long id, Status newStatus) {
+        taskRepository.updateTaskStatus(id, newStatus);
     }
 }
