@@ -33,6 +33,4 @@ Backend: https://github.com/wonganjatan/task-manager
 - Both users can use the filter function to find their desired tasks
 
 ## API Endpoints
-| Method | Path                       | Description                                |
-| GET    | /api/auth/login            | User can login and JWT token generated     |
-| POST   | /api/auth/register         | User can register to Task Manager          |
+![API endpoints](src/main/resources/static/API-endpoints.png)
